@@ -4,7 +4,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
-    return view('master');
+    return view('client.master');
+});
+
+// Route Admin Session
+Route::get('/!4dm1n', function () {
+    return view('admin.pages.home');
 });
 
 Route::get('login', [UserController::class, 'showLoginForm'])->name('login');
