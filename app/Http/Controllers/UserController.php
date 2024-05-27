@@ -28,10 +28,8 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(UserRequest $request)
+    public function store(Request $request)
     {
-
-
     }
 
     /**
@@ -67,7 +65,7 @@ class UserController extends Controller
     }
 
 
-// Login Function
+    // Login Function
     public function showLoginForm()
     {
         return view('auth.Login.login');
@@ -93,7 +91,7 @@ class UserController extends Controller
         ]);
     }
 
-// Register Function
+    // Register Function
     public function showRegistrationForm()
     {
         return view('auth.Register.register');
