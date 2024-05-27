@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     @include('admin.assets.css')
-    <link rel="stylesheet" href="{{ asset('plugins/frontend/css/App.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/backend/css/App.css') }}">
 
     <title>Bem IM | Admin Page</title>
 </head>
