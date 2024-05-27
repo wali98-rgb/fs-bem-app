@@ -4,7 +4,7 @@
     <title>Login</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/frontend/css/pages/auth.css') }}">
 
 </head>
 <body>
@@ -31,10 +31,12 @@
                     <label for="password">Password</label>
                     <input id="password" name="password" placeholder="Masukkan Password Anda" type="password" class="form-control">
                 </div>
-                <div>
+
+                <div class="new-reg">
                     <p>Tidak punya akun?</p>
-                    <a href="{{route('register')}}">Register</a>
+                    <a href="{{ route('register') }}">Register</a>
                 </div>
+
                 <div class="form-group">
                     <button name="submit" type="submit" class="btn btn-primary btn-block">Masuk</button>
                 </div>

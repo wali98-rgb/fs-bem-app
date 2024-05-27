@@ -4,8 +4,7 @@
     <title>Register</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-
+    <link rel="stylesheet" href="{{ asset('plugins/frontend/css/pages/auth.css') }}">
 </head>
 <body>
     <div class="container-register">
@@ -42,13 +41,9 @@
                     </select>
                 </div>
 
-                <div class="d-flex">
-                    <div class="d-flex justify-content-start">
-                        <p>Sudah punya akun?</p>
-                    </div>
-                    <div class="d-flex justify-content-end">
-                        <a href="{{route('login')}}">Login</a>
-                    </div>
+                <div class="new-log">
+                    <p>Sudah punya akun?</p>
+                    <a href="{{ route('login') }}">Login</a>
                 </div>
 
                 <div class="form-group">
