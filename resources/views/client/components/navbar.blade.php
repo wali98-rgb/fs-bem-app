@@ -1,5 +1,3 @@
-@extends('client.master')
-
 <nav>
     <div class="wrapper">
         <div class="logo">
