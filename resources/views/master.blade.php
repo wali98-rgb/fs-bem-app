@@ -10,6 +10,8 @@
 
 <body>
     <h1>Hello bestie</h1>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero ipsum incidunt eius. Repellendus maiores adipisci
+        nesciunt saepe odio dolor nostrum quia esse, minus, voluptatum ullam non deleniti, labore dolorem ea.</p>
 </body>
 
 </html>
