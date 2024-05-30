@@ -231,22 +231,43 @@ nav input {
 
 
 /* About */
+.visi-misi-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+}
+
 .visi-img {
     display: flex;
     align-items: center; /* Mengatur vertikal ke tengah */
-  }
+    justify-content: center; /* Mengatur horizontal ke tengah */
+    margin-top: 20px;
+}
 
 .visi-img img {
     width: 20rem; /* Sesuaikan ukuran gambar */
     height: auto; /* Biarkan tinggi otomatis disesuaikan */
     margin-right: 20px; /* Memberi jarak antara gambar dan teks */
-  }
-.visi-misi-container {
-    display: flex;
-    align-items: center;
 }
+
+.kabinet {
+    margin-bottom: 20px;
+}
+
+.visi-content {
+    text-align: left;
+    max-width: 800px;
+}
+
 .visi-content h1 {
-    margin: 0; /* Menghilangkan margin bawaan h1 */
+    margin: 20px 0; /* Menambahkan margin atas dan bawah untuk h1 */
+}
+
+.visi-content p.visi,
+.visi-content p.misi {
+    margin: 10px 0; /* Menambahkan margin atas dan bawah untuk paragraf visi dan misi */
 }
 
 

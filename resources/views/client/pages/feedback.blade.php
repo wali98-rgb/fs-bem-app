@@ -11,7 +11,7 @@
 
     <div class="feed">
         <h1>Feedback</h1>
-        <h4>Kirim masukan anda tentang website ini agar menjadi lebih baik</h4>
+        <p>Kirim masukan anda tentang website ini agar menjadi lebih baik</p>
         <form action="#" method="post">
             <div class="form-group">
                 <label for="name">Name:</label>
