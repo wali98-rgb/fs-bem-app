@@ -19,6 +19,10 @@
           <!-- Konten Anda di sini -->
           @yield('about')
         </div>
+        <div class="content">
+          <!-- Konten Anda di sini -->
+          @yield('feedback')
+        </div>
     </div>
 
 

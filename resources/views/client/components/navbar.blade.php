@@ -23,7 +23,7 @@
                     <li><a href="#">Olahraga</a></li>
                 </ul>
             </li>
-            <li><a href="#">Feedback</a></li>
+            <li><a href="{{ route('feedback') }}">Feedback</a></li>
         </ul>
         <label for="menu-btn" class="btn menu-btn"><i class="fas fa-bars"></i></label>
     </div>

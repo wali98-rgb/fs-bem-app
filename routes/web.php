@@ -10,6 +10,10 @@ Route::get('/about', function () {
     return view('client.pages.about');
 })->name('about');
 
+Route::get('/feedback', function () {
+    return view('client.pages.feedback');
+})->name('feedback');
+
 // Route Admin Session
 Route::get('/!4dm1n', function () {
     return view('admin.pages.home');
