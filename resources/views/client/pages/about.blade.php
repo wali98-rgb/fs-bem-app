@@ -2,6 +2,9 @@
 
 @section('about')
     <div class="visi-misi-container">
+        <div class="kabinet">
+            <h1>Kabinet Abhiprayagana</h1>
+        </div>
         <div class="visi-img">
             <img src="{{ asset('plugins/frontend/img/bem.png') }}" alt="Photo">
         </div>
@@ -12,7 +15,6 @@
                 adaftif dan interaktif terhadap lingkungan kampus dan masyarakat serta menjunjung tinggi
                 profesionalitas, berfokus pada pengembangan prestasi dan implementasi nilai-nilai integritas organisasi.
             </p>
-
             <p class="misi">
                 <h1>Misi</h1>
                 <ul>

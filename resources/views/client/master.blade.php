@@ -15,6 +15,7 @@
 
 
     <div class="wrapper">
+
         <div class="content">
           <!-- Konten Anda di sini -->
           @yield('about')
