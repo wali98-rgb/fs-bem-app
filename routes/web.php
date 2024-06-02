@@ -6,6 +6,13 @@ use App\Http\Controllers\UserController;
 Route::get('/', function () {
     return view('client.master');
 });
+Route::get('/about', function () {
+    return view('client.pages.about');
+})->name('about');
+
+Route::get('/feedback', function () {
+    return view('client.pages.feedback');
+})->name('feedback');
 
 // Route Admin Session
 Route::get('/!4dm1n', function () {

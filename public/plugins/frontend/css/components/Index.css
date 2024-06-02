@@ -1,0 +1,459 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+
+
+/* General styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    min-height: 100vh;
+    position: relative;
+    padding-bottom: 100px; /* Adjust to ensure space for footer */
+}
+
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+/* Navbar Styles */
+nav {
+  position: relative;
+  width: 100%;
+  background: #242526;
+}
+
+nav .wrapper {
+  max-width: 1300px;
+  padding: 10px 30px;
+  height: 70px;
+  line-height: 70px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.wrapper .logo {
+  display: flex;
+  align-items: center;
+}
+
+.wrapper .logo img {
+  height: 40px; /* Sesuaikan ukuran gambar */
+  margin-right: 20px; /* Memberi jarak antara gambar dan teks */
+}
+
+.wrapper .logo a {
+  color: #f2f2f2;
+  font-size: 30px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.wrapper .nav-links {
+  display: inline-flex;
+}
+
+.nav-links li {
+  list-style: none;
+}
+
+.nav-links li a {
+  color: #f2f2f2;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 500;
+  padding: 9px 15px;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.nav-links li a:hover {
+  background: #3a3b3c;
+}
+
+.nav-links .mobile-item {
+  display: none;
+}
+
+.nav-links .drop-menu {
+  position: absolute;
+  background: #242526;
+  width: 180px;
+  line-height: 45px;
+  top: 85px;
+  opacity: 0;
+  visibility: hidden;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.nav-links li:hover .drop-menu,
+.nav-links li:hover .mega-box {
+  transition: all 0.3s ease;
+  top: 70px;
+  opacity: 1;
+  visibility: visible;
+}
+
+.drop-menu li a {
+  width: 100%;
+  display: block;
+  padding: 0 0 0 15px;
+  font-weight: 400;
+  border-radius: 0px;
+}
+
+.wrapper .btn {
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  display: none;
+}
+
+.wrapper .btn.close-btn {
+  position: absolute;
+  right: 30px;
+  top: 10px;
+}
+
+@media screen and (max-width: 970px) {
+  .wrapper .btn {
+    display: block;
+  }
+
+  .wrapper .nav-links {
+    position: fixed;
+    height: 100vh;
+    width: 100%;
+    max-width: 350px;
+    top: 0;
+    left: -100%;
+    background: #242526;
+    display: block;
+    padding: 50px 10px;
+    line-height: 50px;
+    overflow-y: auto;
+    box-shadow: 0px 15px 15px rgba(0, 0, 0, 0.18);
+    transition: all 0.3s ease;
+  }
+
+  /* custom scroll bar */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #242526;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #3a3b3c;
+  }
+
+  #menu-btn:checked ~ .nav-links {
+    left: 0%;
+  }
+
+  #menu-btn:checked ~ .btn.menu-btn {
+    display: none;
+  }
+
+  #close-btn:checked ~ .btn.menu-btn {
+    display: block;
+  }
+
+  .nav-links li {
+    margin: 15px 10px;
+  }
+
+  .nav-links li a {
+    padding: 0 20px;
+    display: block;
+    font-size: 20px;
+  }
+
+  .nav-links .drop-menu {
+    position: static;
+    opacity: 1;
+    top: 65px;
+    visibility: visible;
+    padding-left: 20px;
+    width: 100%;
+    max-height: 0px;
+    overflow: hidden;
+    box-shadow: none;
+    transition: all 0.3s ease;
+  }
+
+  #showDrop:checked ~ .drop-menu,
+  #showMega:checked ~ .mega-box {
+    max-height: 100%;
+  }
+
+  .nav-links .desktop-item {
+    display: none;
+  }
+
+  .nav-links .mobile-item {
+    display: block;
+    color: #f2f2f2;
+    font-size: 20px;
+    font-weight: 500;
+    padding-left: 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+  }
+
+  .nav-links .mobile-item:hover {
+    background: #3a3b3c;
+  }
+
+  .drop-menu li {
+    margin: 0;
+  }
+
+  .drop-menu li a {
+    border-radius: 5px;
+    font-size: 18px;
+  }
+}
+
+nav input {
+  display: none;
+}
+
+
+/* About */
+.visi-misi-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+}
+
+.visi-img {
+    display: flex;
+    align-items: center; /* Mengatur vertikal ke tengah */
+    justify-content: center; /* Mengatur horizontal ke tengah */
+    margin-top: 20px;
+}
+
+.visi-img img {
+    width: 20rem; /* Sesuaikan ukuran gambar */
+    height: auto; /* Biarkan tinggi otomatis disesuaikan */
+    margin-right: 20px; /* Memberi jarak antara gambar dan teks */
+}
+
+.kabinet {
+    margin-bottom: 20px;
+}
+
+.visi-content {
+    text-align: left;
+    max-width: 800px;
+}
+
+.visi-content h1 {
+    margin: 20px 0; /* Menambahkan margin atas dan bawah untuk h1 */
+}
+
+.visi-content p.visi,
+.visi-content p.misi {
+    margin: 10px 0; /* Menambahkan margin atas dan bawah untuk paragraf visi dan misi */
+}
+
+
+/* Feedback Page Layout */
+.feedback-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+    gap: 20px; /* Space between columns */
+    max-width: 1200px;
+    margin: 50px auto; /* Centering the feedback section */
+}
+
+.sekre {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sekre iframe {
+    width: 100%;
+    height: 400px; /* Adjust height as needed */
+    border: none;
+    border-radius: 10px; /* Optional: To match the styling of other elements */
+}
+
+.feed {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: #f9f9f9; /* Light background for contrast */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 100%; /* Limit width for better readability */
+}
+
+.feed h1 {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.feed form {
+    width: 100%;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group textarea {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: #007bff; /* Highlight border on focus */
+    outline: none;
+}
+
+textarea {
+    resize: vertical; /* Allow vertical resizing */
+    height: 100px; /* Set a default height */
+}
+
+.btn-submit {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-submit:hover {
+    background-color: #0056b3;
+}
+
+/* Media Queries for Responsive Design */
+@media (max-width: 900px) {
+    .feedback-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .sekre iframe {
+        height: 300px; /* Adjust height for smaller screens */
+    }
+
+    .feed {
+        padding: 15px;
+    }
+
+    .feed h1 {
+        font-size: 24px;
+    }
+
+    .form-group label,
+    .form-group input,
+    .form-group textarea,
+    .btn-submit {
+        font-size: 14px;
+    }
+}
+
+/* Footer */
+.footer {
+    position: relative; /* Changed to relative to prevent overlap issues */
+    bottom: 0;
+    width: 100%;
+    background-color: #242526;
+    color: #ffffff;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.footer-wrapper {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.footer h1 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.footer p {
+    margin-bottom: 10px;
+}
+
+.footer-foot {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.footer-maps {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.footer-maps iframe {
+    width: 100%;
+    height: 300px; /* Increased height for better visibility */
+    border: none;
+    border-radius: 10px; /* Optional: To match the styling of other elements */
+}
+
+.footer-social {
+    flex: 1;
+}
+
+.footer-social h1 {
+    margin-bottom: 10px;
+}
+
+.contact-social a {
+    display: inline-block;
+    margin-right: 10px;
+    font-size: 20px;
+    color: #ffffff;
+    transition: color 0.3s ease;
+}
+
+.contact-social a:hover {
+    color: #dddddd;
+}
