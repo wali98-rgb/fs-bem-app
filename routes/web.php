@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AttendenceController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 
@@ -19,9 +20,7 @@ Route::get('/!4dm1n', function () {
     return view('admin.pages.home');
 });
 
-Route::get('/!4dm1n/attendance', function () {
-    return view('admin.pages.attendences.index');
-});
+Route::resource('attendence', AttendenceController::class);
 
 Route::get('login', [UserController::class, 'showLoginForm'])->name('login');
 Route::post('login', [UserController::class, 'login']);
