@@ -3,7 +3,7 @@
     min-width: 21%;
     max-width: 21%;
     background: linear-gradient(180deg, rgb(255, 255, 255) 8%, var(--b9) 30%);
-    min-height: 100dvh;
+    min-height: auto;
 }
 
 /* Sidebar Logo Session */

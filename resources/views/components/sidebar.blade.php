@@ -1,67 +1,44 @@
-<aside class="s1d3baR_">
-    <div class="s1d3LO">
-        <div class="s1d3LOim9">
-            <img src="{{ asset('plugins/frontend/img/bem.png') }}" alt="Bem Logo">
-        </div>
-        <h2>App UI Admin</h2>
-    </div>
-
-    <div class="s1d3L1st">
-        <li class="{{ request()->is('!4dm1n') ? 'active' : '' }}">
-            <a href="{{ url('!4dm1n') }}">
-                <i class="bi bi-columns-gap"></i>
-                Dashboard
-            </a>
-        </li>
-        <li class="{{ request()->is('!4dm1n/attendance') ? 'active' : '' }}">
-            <a href="{{ url('!4dm1n') }}">
-                <i class="bi bi-qr-code"></i>
-                Absensi
-            </a>
-        </li>
-        <li class="{{ request()->is('!4dm1n/major') ? 'active' : '' }}">
-            <a href="{{ url('!4dm1n') }}">
-                <i class="bi bi-easel"></i>
-                Program Studi
-            </a>
-        </li>
-        <li class="{{ request()->is('!4dm1n/department') ? 'active' : '' }}">
-            <a href="{{ url('!4dm1n') }}">
-                <i class="bi bi-journals"></i>
-                Departemen
-            </a>
-        </li>
-        <li class="{{ request()->is('!4dm1n/archive') ? 'active' : '' }}">
-            <a href="{{ url('!4dm1n') }}">
-                <i class="bi bi-box-seam"></i>
-                Arsip
-            </a>
-        </li>
-        <li class="{{ request()->is('!4dm1n/documentation') ? 'active' : '' }}">
-            <a href="{{ url('!4dm1n') }}">
-                <i class="bi bi-images"></i>
-                Dokumentasi
-            </a>
-        </li>
-    </div>
-
-    <div class="s1d3ex_">
-        <h3>NAVIGASI AKUN</h3>
-
-        <div class="s1d3exL1">
-            <li class="{{ request()->is('!4dm1n/profile') ? 'active' : '' }}">
+<nav class="pcoded-navbar">
+    <div class="sidebar_toggle"><a href="#"><i class="icon-close icons"></i></a></div>
+    <div class="pcoded-inner-navbar main-menu">
+        <div class="pcoded-navigatio-lavel" data-i18n="nav.category.navigation">Halaman</div>
+        <ul class="pcoded-item pcoded-left-item">
+            <li class="{{ request()->is('!4dm1n') ? 'active' : '' }}">
                 <a href="{{ url('!4dm1n') }}">
-                    <i class="bi bi-person-circle"></i>
-                    Profil
+                    <span class="pcoded-micon"><i class="bi bi-columns-gap"></i></span>
+                    <span class="pcoded-mtext" data-i18n="nav.dash.main">Dashboard</span>
                 </a>
             </li>
-
-            <li>
-                <a href="{{ url('!4dm1n') }}">
-                    <i class="bi bi-door-open"></i>
-                    Logout
+            <li class="{{ request()->is('!4dm1n/attendance') ? 'active' : '' }}">
+                <a href="{{ url('!4dm1n/attendance') }}">
+                    <span class="pcoded-micon"><i class="bi bi-qr-code"></i></span>
+                    <span class="pcoded-mtext" data-i18n="nav.form-components.main">Absensi</span>
                 </a>
             </li>
-        </div>
+            <li class="{{ request()->is('!4dm1n/major') ? 'active' : '' }}">
+                <a href="{{ url('!4dm1n/major') }}">
+                    <span class="pcoded-micon"><i class="bi bi-easel"></i></span>
+                    <span class="pcoded-mtext" data-i18n="nav.form-components.main">Program Studi</span>
+                </a>
+            </li>
+            <li class="{{ request()->is('!4dm1n/departmen') ? 'active' : '' }}">
+                <a href="{{ url('!4dm1n/departmen') }}">
+                    <span class="pcoded-micon"><i class="bi bi-journals"></i></span>
+                    <span class="pcoded-mtext" data-i18n="nav.form-components.main">Departemen</span>
+                </a>
+            </li>
+            <li class="{{ request()->is('!4dm1n/archive') ? 'active' : '' }}">
+                <a href="{{ url('!4dm1n/archive') }}">
+                    <span class="pcoded-micon"><i class="bi bi-box-seam"></i></span>
+                    <span class="pcoded-mtext" data-i18n="nav.form-components.main">Arsip</span>
+                </a>
+            </li>
+            <li class="{{ request()->is('!4dm1n/documentation') ? 'active' : '' }}">
+                <a href="{{ url('!4dm1n/documentation') }}">
+                    <span class="pcoded-micon"><i class="bi bi-images"></i></span>
+                    <span class="pcoded-mtext" data-i18n="nav.form-components.main">Dokumentasi</span>
+                </a>
+            </li>
+        </ul>
     </div>
-</aside>
+</nav>
