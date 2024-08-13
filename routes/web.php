@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AttendenceController;
+use App\Http\Controllers\ProdiController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 
@@ -16,11 +17,14 @@ Route::get('/feedback', function () {
 })->name('feedback');
 
 // Route Admin Session
-Route::get('/!4dm1n', function () {
-    return view('admin.pages.home');
+Route::prefix('!4dm1n')->group(function () {
+    // Route Layouts
+    Route::get('/', function () {
+        return view('admin.pages.home');
+    })->name('home');
+    Route::resource('major', ProdiController::class);
+    Route::resource('attendence', AttendenceController::class);
 });
-
-Route::resource('attendence', AttendenceController::class);
 
 Route::get('login', [UserController::class, 'showLoginForm'])->name('login');
 Route::post('login', [UserController::class, 'login']);
