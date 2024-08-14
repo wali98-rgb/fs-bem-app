@@ -21,7 +21,7 @@
                                 <i class="bi bi-columns-gap"></i>
                             </a>
                         </li>
-                        <li class="breadcrumb-item"><a href="{{ route('major.index') }}">List Prodi</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Halaman Utama</a></li>
                         <li class="breadcrumb-item"><a href="{{ route('major.index') }}">Program Studi</a>
                         </li>
                     </ul>
@@ -65,7 +65,7 @@
                                     <td align="center">
                                         <a href="{{ route('major.edit', $item->id) }}"
                                             class="btn btn-warning btn-round">Edit</a>
-                                        <a href="{{ route('major.destroy', $item->id) }} class="btn btn-danger btn-round"
+                                        <a href="{{ route('major.destroy', $item->id) }}" class="btn btn-danger btn-round"
                                             data-confirm-delete="true">HAPUS</a>
                                     </td>
                                 </tr>

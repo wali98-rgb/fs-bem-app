@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Prodi;
 use Illuminate\Http\Request;
-
-use function PHPUnit\Framework\isEmpty;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ProdiController extends Controller
 {
@@ -21,6 +20,11 @@ class ProdiController extends Controller
         } else {
             $prodi = Prodi::first()->paginate(5);
         }
+
+        $title = 'Hapus Program Studi!';
+        $text = "Anda yakin ingin menghapusnya?";
+        confirmDelete($title, $text);
+
         return view('admin.pages.majors.index', compact('prodi'));
     }
 
@@ -37,7 +41,18 @@ class ProdiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name_prodi' => 'required',
+            'level' => 'required|max:2'
+        ]);
+
+        Prodi::create([
+            'name_prodi' => $request->name_prodi,
+            'level' => $request->level
+        ]);
+
+        Alert::toast('Program Studi berhasil dibuat.', 'success');
+        return redirect()->route('major.index');
     }
 
     /**
@@ -53,7 +68,8 @@ class ProdiController extends Controller
      */
     public function edit(string $id)
     {
-        return view('admin.pages.majors.edit');
+        $prodi = Prodi::findOrFail($id);
+        return view('admin.pages.majors.edit', compact('prodi'));
     }
 
     /**
@@ -61,7 +77,20 @@ class ProdiController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'name_prodi' => 'required',
+            'level' => 'required|max:2'
+        ]);
+
+        $prodi = Prodi::findOrFail($id);
+
+        $prodi->update([
+            'name_prodi' => $request->name_prodi,
+            'level' => $request->level
+        ]);
+
+        Alert::toast('Program Studi berhasil diubah.', 'success');
+        return redirect()->route('major.index');
     }
 
     /**
@@ -69,6 +98,11 @@ class ProdiController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $prodi = Prodi::findOrFail($id);
+
+        $prodi->delete();
+        Alert::alert('Sukses', 'Program studi berhasil dihapus.', 'success');
+
+        return redirect()->route('major.index');
     }
 }
