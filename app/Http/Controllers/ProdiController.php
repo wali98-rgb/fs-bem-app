@@ -18,7 +18,7 @@ class ProdiController extends Controller
         if ($prodis->isEmpty()) {
             $prodi = Prodi::all();
         } else {
-            $prodi = Prodi::first()->paginate(5);
+            $prodi = Prodi::orderBy('name_prodi', 'asc')->paginate(10);
         }
 
         $title = 'Hapus Program Studi!';

@@ -18,7 +18,7 @@ class DepartmentController extends Controller
         if ($depts->isEmpty()) {
             $dept = Department::all();
         } else {
-            $dept = Department::first()->paginate('10');
+            $dept = Department::orderBy('name_dpt', 'asc')->paginate('10');
         }
 
         $title = 'Hapus Departemen Kabinet!';
