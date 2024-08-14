@@ -6,10 +6,10 @@
         <div class="row align-items-end">
             <div class="col-lg-8">
                 <div class="page-header-title">
-                    <i class="bi bi-easel bg-c-blue"></i>
+                    <i class="bi bi-journals bg-c-blue"></i>
                     <div class="d-inline">
-                        <h4>List Program Studi</h4>
-                        <span>Program studi kampus Perguruan Tinggi Indonesia Mandiri Bandung.</span>
+                        <h4>Departemen Kabinet BEM Indonesia Mandiri</h4>
+                        <span>Daftar departemen yang terdapat dalam BEM Indonesia Mandiri Bandung.</span>
                     </div>
                 </div>
             </div>
@@ -22,7 +22,7 @@
                             </a>
                         </li>
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Halaman Utama</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('major.index') }}">Program Studi</a>
+                        <li class="breadcrumb-item"><a href="{{ route('department.index') }}">Departemen</a>
                         </li>
                     </ul>
                 </div>
@@ -32,10 +32,10 @@
     <!-- Page-header end -->
 
     {{-- Page-body start --}}
-    <div class="page-body">
+    <div class="page-bod">
         <div class="card">
             <div class="card-header">
-                <a href="{{ route('major.create') }}" class="btn btn-primary btn-round">Tambah Program Studi</a>
+                <a href="{{ route('department.create') }}" class="btn btn-primary btn-round">Tambah Departemen Kabinet</a>
                 <div class="card-header-right">
                     <ul class="list-unstyled card-option">
                         <li><i class="icofont icofont-simple-left "></i></li>
@@ -51,38 +51,36 @@
                         <thead>
                             <tr>
                                 <th style="text-align: center">#</th>
-                                <th>Program Studi</th>
-                                <th>Tingakatan</th>
+                                <th>Departemen Kabinet</th>
                                 <th style="text-align: center">Tindakan</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($prodi as $key=>$item)
+                            @forelse ($dept as $key=>$item)
                                 <tr>
                                     <th style="text-align: center" scope="row">{{ $key + 1 }}</th>
-                                    <td>{{ ucwords($item->name_prodi) }}</td>
-                                    <td>{{ $item->level }}</td>
+                                    <td>{{ ucwords($item->name_dpt) }}</td>
                                     <td align="center">
-                                        <a href="{{ route('major.edit', $item->id) }}"
+                                        <a href="{{ route('department.edit', $item->id) }}"
                                             class="btn btn-warning btn-round">Edit</a>
-                                        <a href="{{ route('major.destroy', $item->id) }}" class="btn btn-danger btn-round"
-                                            data-confirm-delete="true">HAPUS</a>
+                                        <a href="{{ route('department.destroy', $item->id) }}"
+                                            class="btn btn-danger btn-round" data-confirm-delete="true">HAPUS</a>
                                     </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <th colspan="4" style="text-align: center"><i>Data Program studi belum
+                                    <th colspan="4" style="text-align: center"><i>Data Departemen Kabinet belum
                                             diperbaharui.</i>
                                     </th>
                                 </tr>
                             @endforelse
                         </tbody>
                     </table>
-                    @if ($prodi->isEmpty())
+                    @if ($dept->isEmpty())
                         {{ null }}
                     @else
                         <div class="d-flex justify-content-end pt-2">
-                            {{ $prodi->links() }}
+                            {{ $dept->links() }}
                         </div>
                     @endif
                 </div>

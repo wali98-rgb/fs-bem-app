@@ -101,8 +101,8 @@ class ProdiController extends Controller
         $prodi = Prodi::findOrFail($id);
 
         $prodi->delete();
-        Alert::alert('Sukses', 'Program studi berhasil dihapus.', 'success');
+        Alert::alert('Berhasil', 'Program studi berhasil dihapus.', 'success');
 
-        return redirect()->route('major.index');
+        return redirect()->back();
     }
 }

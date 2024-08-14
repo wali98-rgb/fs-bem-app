@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AttendenceController;
+use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\ProdiController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -24,6 +25,7 @@ Route::prefix('!4dm1n')->group(function () {
     })->name('home');
     Route::resource('major', ProdiController::class);
     Route::resource('attendence', AttendenceController::class);
+    Route::resource('department', DepartmentController::class);
 });
 
 Route::get('login', [UserController::class, 'showLoginForm'])->name('login');

@@ -21,10 +21,10 @@
                     <span class="pcoded-mtext" data-i18n="nav.form-components.main">Program Studi</span>
                 </a>
             </li>
-            <li class="{{ request()->is('!4dm1n/departmen') ? 'active' : '' }}">
-                <a href="{{ url('!4dm1n/departmen') }}">
+            <li class="{{ request()->is('!4dm1n/department') ? 'active' : '' }}">
+                <a href="{{ url('!4dm1n/department') }}">
                     <span class="pcoded-micon"><i class="bi bi-journals"></i></span>
-                    <span class="pcoded-mtext" data-i18n="nav.form-components.main">Departemen</span>
+                    <span class="pcoded-mtext" data-i18n="nav.form-components.main">Departemen Kabinet</span>
                 </a>
             </li>
             <li class="{{ request()->is('!4dm1n/archive') ? 'active' : '' }}">
