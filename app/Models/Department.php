@@ -11,4 +11,9 @@ class Department extends Model
 
     protected $table = 'departments';
     protected $fillable = ['name_dpt'];
+
+    protected function user()
+    {
+        return $this->hasMany(User::class);
+    }
 }

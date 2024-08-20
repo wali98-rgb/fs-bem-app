@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Register</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{ asset('plugins/frontend/css/pages/auth.css') }}">
 </head>
+
 <body>
     <div class="container-register">
         <div class="register-box">
@@ -22,16 +24,20 @@
             <form method="POST" action="{{ route('register') }}">
                 @csrf
                 <div class="form-group">
-                    <input id="name" name="name" placeholder="Nama" type="text" class="form-control" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                    <input id="name" name="name" placeholder="Nama" type="text" class="form-control"
+                        value="{{ old('name') }}" required autocomplete="name" autofocus>
                 </div>
                 <div class="form-group">
-                    <input id="email" name="email" placeholder="Email" type="email" class="form-control" value="{{ old('email') }}" required autocomplete="email">
+                    <input id="email" name="email" placeholder="Email" type="email" class="form-control"
+                        value="{{ old('email') }}" required autocomplete="email">
                 </div>
                 <div class="form-group">
-                    <input id="password" name="password" placeholder="Password" type="password" class="form-control" required autocomplete="new-password">
+                    <input id="password" name="password" placeholder="Password" type="password" class="form-control"
+                        required autocomplete="new-password">
                 </div>
                 <div class="form-group">
-                    <input id="password_confirmation" name="password_confirmation" placeholder="Konfirmasi Password" type="password" class="form-control" required autocomplete="new-password">
+                    <input id="password_confirmation" name="password_confirmation" placeholder="Konfirmasi Password"
+                        type="password" class="form-control" required autocomplete="new-password">
                 </div>
                 <div class="form-group">
                     <select id="gender" name="gender" class="form-control" required>
@@ -53,4 +59,5 @@
         </div>
     </div>
 </body>
+
 </html>

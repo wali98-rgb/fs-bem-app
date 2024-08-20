@@ -88,6 +88,12 @@
                     <span class="pcoded-mtext" data-i18n="nav.form-components.main">Pengguna</span>
                 </a>
             </li>
+            <li class="{{ request()->is('!4dm1n/documentation') ? 'active' : '' }}">
+                <a href="{{ url('!4dm1n/documentation') }}">
+                    <span class="pcoded-micon"><i class="bi bi-images"></i></span>
+                    <span class="pcoded-mtext" data-i18n="nav.form-components.main">Komponen Konten</span>
+                </a>
+            </li>
         </ul>
     </div>
 </nav>
