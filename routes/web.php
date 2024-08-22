@@ -8,6 +8,7 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\ProdiController;
+use App\Http\Controllers\ProkerController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -32,6 +33,7 @@ Route::prefix('!4dm1n')->group(function () {
     Route::resource('major', ProdiController::class);
     Route::resource('attendence', AttendenceController::class);
     Route::resource('department', DepartmentController::class);
+    Route::resource('proker', ProkerController::class);
 });
 
 // Route Auth

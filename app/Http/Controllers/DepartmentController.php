@@ -98,7 +98,7 @@ class DepartmentController extends Controller
 
         $dept->delete();
 
-        Alert::alert('Berhasil', 'Departemen Kabinet berhasil dihapus.', 'succee');
+        Alert::alert('Berhasil', 'Departemen Kabinet berhasil dihapus.', 'succes');
         return redirect()->back();
     }
 }

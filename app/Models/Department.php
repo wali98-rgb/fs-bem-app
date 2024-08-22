@@ -12,8 +12,13 @@ class Department extends Model
     protected $table = 'departments';
     protected $fillable = ['name_dpt'];
 
-    protected function user()
+    public function user()
     {
         return $this->hasMany(User::class);
+    }
+
+    public function proker()
+    {
+        return $this->hasMany(Proker::class);
     }
 }

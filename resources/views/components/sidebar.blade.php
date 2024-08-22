@@ -94,6 +94,12 @@
                     <span class="pcoded-mtext" data-i18n="nav.form-components.main">Komponen Konten</span>
                 </a>
             </li>
+            <li class="{{ request()->is('!4dm1n/proker') ? 'active' : '' }}">
+                <a href="{{ url('!4dm1n/proker') }}">
+                    <span class="pcoded-micon"><i class="bi bi-activity"></i></span>
+                    <span class="pcoded-mtext" data-i18n="nav.form-components.main">Program Kerja Departemen</span>
+                </a>
+            </li>
         </ul>
     </div>
 </nav>
