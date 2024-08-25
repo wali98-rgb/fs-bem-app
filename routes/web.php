@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\DocumentationController;
 use App\Http\Controllers\ProdiController;
 use App\Http\Controllers\ProkerController;
 use Illuminate\Support\Facades\Route;
@@ -34,6 +35,10 @@ Route::prefix('!4dm1n')->group(function () {
     Route::resource('attendence', AttendenceController::class);
     Route::resource('department', DepartmentController::class);
     Route::resource('proker', ProkerController::class);
+    Route::resource('docum', DocumentationController::class);
+
+    Route::delete('/docum/{docum}/image/{imageIndex}', [DocumentationController::class, 'deleteImage'])->name('docum.deleteImage');
+    Route::get('/docum/{docum}/image/{imageIndex}', [DocumentationController::class, 'showImage'])->name('docum.showImage');
 });
 
 // Route Auth

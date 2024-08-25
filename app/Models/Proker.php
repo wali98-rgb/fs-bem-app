@@ -16,4 +16,9 @@ class Proker extends Model
     {
         return $this->belongsTo(Department::class, 'dept_id');
     }
+
+    public function documentation()
+    {
+        return $this->hasMany(Documentation::class);
+    }
 }

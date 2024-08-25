@@ -33,8 +33,8 @@
                     <span class="pcoded-mtext" data-i18n="nav.form-components.main">Arsip</span>
                 </a>
             </li>
-            <li class="{{ request()->is('!4dm1n/documentation') ? 'active' : '' }}">
-                <a href="{{ url('!4dm1n/documentation') }}">
+            <li class="{{ request()->is('!4dm1n/docum') ? 'active' : '' }}">
+                <a href="{{ url('!4dm1n/docum') }}">
                     <span class="pcoded-micon"><i class="bi bi-images"></i></span>
                     <span class="pcoded-mtext" data-i18n="nav.form-components.main">Dokumentasi</span>
                 </a>
