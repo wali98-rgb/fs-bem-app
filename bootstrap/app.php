@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\UserAccess;
+use App\Http\Middleware\UserPermission;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -18,6 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->alias([
             'user-access' => UserAccess::class,
+            'user-permission' => UserPermission::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

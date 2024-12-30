@@ -17,7 +17,7 @@
                 <div class="page-header-breadcrumb">
                     <ul class="breadcrumb-title">
                         <li class="breadcrumb-item">
-                            <a href="index.html">
+                            <a href="{{ route('home') }}">
                                 <i class="bi bi-columns-gap"></i>
                             </a>
                         </li>

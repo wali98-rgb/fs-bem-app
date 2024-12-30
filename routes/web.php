@@ -12,6 +12,7 @@ use App\Http\Controllers\ProdiController;
 use App\Http\Controllers\ProkerController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
@@ -31,12 +32,20 @@ Route::prefix('!4dm1n')->group(function () {
     Route::get('/', function () {
         return view('admin.pages.home');
     })->name('home');
+
     Route::resource('major', ProdiController::class);
     Route::resource('attendence', AttendenceController::class);
-    Route::resource('department', DepartmentController::class);
     Route::resource('proker', ProkerController::class);
     Route::resource('docum', DocumentationController::class);
+    Route::resource('user', UserController::class);
 
+    // Jika di UserController tidak bisa memakai route user/{lain-lain} selain dari route resource controller lagi
+    Route::get('/user_access', [UserController::class, 'showAccess'])->name('user.access');
+    Route::put('/user_access/{id}', [UserController::class, 'addAccess'])->name('user.addAccess');
+
+    Route::resource('department', DepartmentController::class);
+
+    // Route documentations page
     Route::delete('/docum/{docum}/image/{imageIndex}', [DocumentationController::class, 'deleteImage'])->name('docum.deleteImage');
     Route::get('/docum/{docum}/image/{imageIndex}', [DocumentationController::class, 'showImage'])->name('docum.showImage');
 });

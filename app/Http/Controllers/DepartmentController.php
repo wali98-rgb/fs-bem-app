@@ -8,6 +8,11 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class DepartmentController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('user-permission');
+    }
+
     /**
      * Display a listing of the resource.
      */

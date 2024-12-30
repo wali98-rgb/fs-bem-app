@@ -6,12 +6,14 @@
             line-height: 0;
             overflow: hidden;
             border-radius: .3rem;
+            border: .5px solid silver;
         }
 
         .docum-image img {
             filter: blur(0px);
             transition: filter 0.3s ease-in;
             transform: scale(1.1);
+            object-fit: contain;
         }
 
         .docum-title {
@@ -83,7 +85,7 @@
                 <div class="page-header-breadcrumb">
                     <ul class="breadcrumb-title">
                         <li class="breadcrumb-item">
-                            <a href="index.html">
+                            <a href="{{ route('home') }}">
                                 <i class="bi bi-columns-gap"></i>
                             </a>
                         </li>
@@ -127,7 +129,7 @@
                     @empty
                         <li class="nav-item">
                             <a class="nav-link active" data-toggle="tab" href="#" role="tab"
-                                @disabled(true)>Tambahkan proker terlebih dahulu.</a>
+                                @disabled(true)>Program kerja belum ditambahkan.</a>
                             <div class="slide"></div>
                         </li>
                     @endforelse
@@ -147,7 +149,7 @@
                                             <div class="docum-listing">
                                                 <div class="docum-image mb-3">
                                                     <a href="#">
-                                                        <img style="border: .5px solid silver; border-radius: .3rem; width: 100%;"
+                                                        <img style="border-radius: .3rem; width: 100%;"
                                                             src="{{ asset($documPath) }}" alt="{{ $item->docum }}">
                                                     </a>
                                                 </div>
@@ -165,8 +167,7 @@
                             @endforeach
                         </div>
                     @empty
-                        <div class="tab-pane {{ request()->is('!4dm1n/docum#' . $documentation->proker->proker) ? 'active' : '' }}"
-                            id="" role="tabpanel">
+                        <div class="tab-pane" id="" role="tabpanel">
                             <p class="m-0">
                                 Program kerja belum ditambahkan.
                             </p>

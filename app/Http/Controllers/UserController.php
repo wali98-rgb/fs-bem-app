@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Department;
+use App\Models\Prodi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class UserController extends Controller
 {
@@ -14,7 +17,67 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::all();
+
+        if ($users->isEmpty()) {
+            $userBem = User::all();
+            $userAdmin = User::all();
+        } else {
+            // $user = User::orderBy('name', 'asc')->paginate('10');
+            // Memfilter pengguna dengan role 'bem' dan 'admin', kecuali 'superadmin'
+            $userBem = User::withRoles(['bem'])
+                ->with('department', 'prodi')
+                ->orderBy('name', 'asc')
+                ->paginate(10);
+
+            $userAdmin = User::withRoles(['admin'])
+                ->with('department', 'prodi')
+                ->orderBy('name', 'asc')
+                ->paginate(10);
+        }
+
+        $title = 'Hapus Akun Pengguna!';
+        $text = 'Anda yakin ingin menghapusnya?';
+        confirmDelete($title, $text);
+
+        // $user_fk = User::with('department', 'prodi')->get();
+
+        return view('admin.pages.users.index', compact('userBem', 'userAdmin'));
+    }
+
+    public function showAccess()
+    {
+        $users = User::all();
+        $depts = Department::all();
+
+        if ($users->isEmpty()) {
+            $user = User::all();
+        } else {
+            // $user = User::orderBy('name', 'asc')->paginate('10');
+            // Memfilter pengguna dengan role 'bem' dan 'admin', kecuali 'superadmin'
+            $user = User::withRoles(['bem'])
+                ->with('department', 'prodi')
+                ->orderBy('name', 'asc')
+                ->paginate(10);
+        }
+
+        return view('admin.pages.users.user_access', compact('user', 'depts'));
+    }
+
+    public function addAccess(Request $request, string $id)
+    {
+        $request->validate([
+            'access_user' => 'required'
+        ]);
+
+        $user = User::findOrFail($id);
+
+        $user->update([
+            'access_user' => 1
+        ]);
+
+        Alert::toast('Akses telah diberikan.', 'success');
+        return redirect()->back();
     }
 
     /**
@@ -22,7 +85,10 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        $depts = Department::all();
+        $prodis = Prodi::all();
+
+        return view('admin.pages.users.create', compact('depts', 'prodis'));
     }
 
     /**
@@ -30,6 +96,44 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'photo' => 'nullable|image|mimes:png,jpg,jpeg|max:5000000',
+            'name' => 'required|min:2',
+            'email' => 'required',
+            'password' => 'required',
+            'gender' => 'required',
+            'role' => 'required',
+            'dept_id' => 'required',
+            'prodi_id' => 'required'
+        ]);
+
+        // Inisialisasi variable untuk menyimpan nama file
+        $image_name = null;
+
+        // Menyimpan gambar ke storage project
+        if ($request->hasFile('photo')) {
+            $photo = $request->file('photo');
+            $image_name = time() . '_' . $photo->hashName();
+            $photo->move(public_path('images/profile_img'), $image_name);
+            $image_path = 'images/profile_img/' . $image_name;
+        } else {
+            $image_path = NULL;
+        }
+
+        // Menyimpan gambar ke database
+        User::create([
+            'photo' => $image_path,
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request['password']),
+            'gender' => $request->gender,
+            'role' => $request->role,
+            'dept_id' => $request->dept_id,
+            'prodi_id' => $request->prodi_id
+        ]);
+
+        Alert::toast('Pengguna berhasil ditambahkan.', 'success');
+        return redirect()->route('user.index');
     }
 
     /**
@@ -45,7 +149,11 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $depts = Department::all();
+        $prodis = Prodi::all();
+
+        return view('admin.pages.users.edit', compact('user', 'depts', 'prodis'));
     }
 
     /**
@@ -53,7 +161,52 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'photo' => 'nullable|image|mimes:png,jpg,jpeg|max:5000000',
+            'name' => 'required|min:2',
+            'email' => 'required',
+            'gender' => 'required',
+            'role' => 'required',
+            'dept_id' => 'required',
+            'prodi_id' => 'required'
+        ]);
+
+        $user = User::findOrFail($id);
+
+        $image_path = null;
+
+        if ($request->hasFile('photo')) {
+            $photo = $request->file('photo');
+            $image_name = time() . '_' . $photo->hashName();
+            $photo->move(public_path('images/profile_img'), $image_name);
+            $image_path = 'images/profile_img/' . $image_name;
+
+            if (file_exists($user->photo)) {
+                unlink($user->photo);
+            }
+
+            $user->update([
+                'photo' => $image_path,
+                'name' => $request->name,
+                'email' => $request->email,
+                'gender' => $request->gender,
+                'role' => $request->role,
+                'dept_id' => $request->dept_id,
+                'prodi_id' => $request->prodi_id
+            ]);
+        } else {
+            $user->update([
+                'name' => $request->name,
+                'email' => $request->email,
+                'gender' => $request->gender,
+                'role' => $request->role,
+                'dept_id' => $request->dept_id,
+                'prodi_id' => $request->prodi_id
+            ]);
+        }
+
+        Alert::toast('Data pengguna berhasil diperbarui.', 'success');
+        return redirect()->route('user.index');
     }
 
     /**
@@ -61,7 +214,16 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        if (file_exists($user->photo)) {
+            unlink($user->photo);
+        }
+
+        $user->delete();
+
+        Alert::alert('Berhasil', 'Pengguna berhasil dihapus.', 'success');
+        return redirect()->back();
     }
 
 

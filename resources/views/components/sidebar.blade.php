@@ -82,9 +82,9 @@
                     <span class="pcoded-mtext" data-i18n="nav.form-components.main">Pesan</span>
                 </a>
             </li>
-            <li class="{{ request()->is('!4dm1n/documentation') ? 'active' : '' }}">
-                <a href="{{ url('!4dm1n/documentation') }}">
-                    <span class="pcoded-micon"><i class="bi bi-images"></i></span>
+            <li class="{{ request()->is('!4dm1n/user') || request()->is('!4dm1n/user_access') ? 'active' : '' }}">
+                <a href="{{ url('!4dm1n/user') }}">
+                    <span class="pcoded-micon"><i class="bi bi-people"></i></span>
                     <span class="pcoded-mtext" data-i18n="nav.form-components.main">Pengguna</span>
                 </a>
             </li>

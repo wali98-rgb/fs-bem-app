@@ -6,10 +6,10 @@
         <div class="row align-items-end">
             <div class="col-lg-8">
                 <div class="page-header-title">
-                    <i class="bi bi-easel bg-c-blue"></i>
+                    <i class="bi bi-people bg-c-blue"></i>
                     <div class="d-inline">
-                        <h4>List Program Studi</h4>
-                        <span>Program studi kampus Perguruan Tinggi Indonesia Mandiri Bandung.</span>
+                        <h4>Akun Para Pengguna</h4>
+                        <span>Mengelola data akun pengguna dari setiap role.</span>
                     </div>
                 </div>
             </div>
@@ -22,7 +22,7 @@
                             </a>
                         </li>
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Halaman Utama</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('major.index') }}">Program Studi</a>
+                        <li class="breadcrumb-item"><a href="{{ route('user.index') }}">Pengguna</a>
                         </li>
                     </ul>
                 </div>
@@ -34,8 +34,9 @@
     {{-- Page-body start --}}
     <div class="page-body">
         <div class="card">
-            <div class="card-header">
-                <a href="{{ route('major.create') }}" class="btn btn-primary btn-round">Tambah Program Studi</a>
+            <div class="card-header pb-0">
+                <a href="{{ route('user.create') }}" class="btn btn-success btn-round">Konfirmasi</a>
+                <h3 class="mt-4 ml-2 pb-2" style="font-weight: 700">Status : Anggota BEM</h3>
                 <div class="card-header-right">
                     <ul class="list-unstyled card-option">
                         <li><i class="icofont icofont-simple-left "></i></li>
@@ -45,44 +46,59 @@
                     </ul>
                 </div>
             </div>
+
             <div class="card-block table-border-style">
                 <div class="table-responsive p-4">
                     <table class="table">
                         <thead>
                             <tr>
                                 <th style="text-align: center">#</th>
-                                <th>Program Studi</th>
-                                <th>Tingakatan</th>
+                                <th>Foto Profil</th>
+                                <th>Nama Lengkap</th>
+                                <th>Departemen</th>
                                 <th style="text-align: center">Tindakan</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($prodi as $key=>$item)
+                            @forelse ($user as $key=>$item)
                                 <tr>
                                     <th style="text-align: center" scope="row">{{ $key + 1 }}</th>
-                                    <td>{{ ucwords($item->name_prodi) }}</td>
-                                    <td>{{ $item->level }}</td>
                                     <td align="center">
-                                        <a href="{{ route('major.edit', $item->id) }}"
-                                            class="btn btn-warning btn-round">Edit</a>
-                                        <a href="{{ route('major.destroy', $item->id) }}" class="btn btn-danger btn-round"
-                                            data-confirm-delete="true">HAPUS</a>
+                                        @if ($item->photo === null)
+                                            <img src="{{ asset('images/profile_img/default-image.jpg') }}" alt=""
+                                                style="width: 50px; height: 50px; object-fit: cover;"
+                                                class="img-fluid img-circle">
+                                        @else
+                                            <img src="{{ asset($item->photo) }}" alt="{{ $item->name }}"
+                                                style="width: 50px; height: 50px; object-fit: cover;"
+                                                class="img-fluid img-circle">
+                                        @endif
+                                    </td>
+                                    <td>{{ ucwords($item->name) }}</td>
+                                    <td>
+                                        Departemen {{ ucwords($item->department->name_dpt) }}
+                                    </td>
+                                    <td align="center">
+                                        <a href="{{ route('user.addAccess', $item->id) }}"
+                                            class="btn btn-success btn-round">Beri Akses</a>
+                                        {{-- <a href="{{ route('user.destroy', $item->id) }}" class="btn btn-danger btn-round"
+                                            data-confirm-delete="true">HAPUS</a> --}}
                                     </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <th colspan="4" style="text-align: center"><i>Data Program studi belum
+                                    <th colspan="8" style="text-align: center"><i>Data Departemen Kabinet belum
                                             diperbaharui.</i>
                                     </th>
                                 </tr>
                             @endforelse
                         </tbody>
                     </table>
-                    @if ($prodi->isEmpty())
+                    @if ($user->isEmpty())
                         {{ null }}
                     @else
                         <div class="d-flex justify-content-end pt-2">
-                            {{ $prodi->links() }}
+                            {{ $user->links() }}
                         </div>
                     @endif
                 </div>

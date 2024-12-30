@@ -17,7 +17,7 @@
                 <div class="page-header-breadcrumb">
                     <ul class="breadcrumb-title">
                         <li class="breadcrumb-item">
-                            <a href="index.html">
+                            <a href="{{ route('home') }}">
                                 <i class="bi bi-columns-gap"></i>
                             </a>
                         </li>
@@ -97,8 +97,7 @@
                             @endif --}}
                         </div>
                     @empty
-                        <div class="tab-pane {{ request()->is('!4dm1n/proker#' . $proker->department->name_dpt) ? 'active' : '' }}"
-                            id="" role="tabpanel">
+                        <div class="tab-pane" id="" role="tabpanel">
                             <p class="m-0">
                                 Departemen Kabinet belum ditambahkan.
                             </p>
