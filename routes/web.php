@@ -38,6 +38,7 @@ Route::prefix('!4dm1n')->group(function () {
     Route::resource('proker', ProkerController::class);
     Route::resource('docum', DocumentationController::class);
     Route::resource('user', UserController::class);
+    Route::resource('archive', ArchiveController::class);
 
     // Jika di UserController tidak bisa memakai route user/{lain-lain} selain dari route resource controller lagi
     Route::get('/user_access', [UserController::class, 'showAccess'])->name('user.access');
@@ -59,7 +60,7 @@ Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 // Register Routes
 Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('register', [RegisterController::class, 'register']);
-// Route::post('register', [RegisterController::class, 'registered']);
+
 
 // Password Reset Routes
 Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
@@ -72,12 +73,4 @@ Route::get('email/verify', [VerificationController::class, 'show'])->name('verif
 Route::get('email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify');
 Route::post('email/resend', [VerificationController::class, 'resend'])->name('verification.resend');
 
-// Route::get('login', [UserController::class, 'showLoginForm'])->name('login');
-// Route::post('login', [UserController::class, 'login']);
 
-// Route::get('register', [UserController::class, 'showRegistrationForm'])->name('register');
-// Route::post('register', [UserController::class, 'register']);
-
-// Auth::routes();
-
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

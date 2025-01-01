@@ -256,7 +256,8 @@ class UserController extends Controller
     // Register Function
     public function showRegistrationForm()
     {
-        return view('auth.Register.register');
+        $prodis = Prodi::all();
+        return view('auth.Register.register', compact('prodis'));
     }
 
     public function register(Request $request)

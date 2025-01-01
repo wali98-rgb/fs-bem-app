@@ -16319,9 +16319,8 @@ table.footable-paging-center>tfoot>tr.footable-paging>td {
 
 .footer {
     bottom: 0;
-    position: fixed;
     width: 100%;
-    z-index: 9;
+    z-index: 1;
 }
 
 .footer p {

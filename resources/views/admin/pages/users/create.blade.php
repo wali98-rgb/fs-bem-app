@@ -95,7 +95,7 @@
                             <select name="dept_id" class="form-control">
                                 <option disabled value="" selected>-- Pilih Departemen --</option>
                                 @forelse ($depts as $item)
-                                    <option value="{{ $item->id }}">Kabinet {{ $item->name_dpt }}
+                                    <option value="{{ $item->id }}">Departemen {{ $item->name_dpt }}
                                     </option>
                                 @empty
                                     <option value="" disabled>Tambahkan Departemen terlebih dahulu.</option>
