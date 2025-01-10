@@ -29,13 +29,13 @@
             </li>
             <li class="{{ request()->is('!4dm1n/archive') ? 'active' : '' }}">
                 <a href="{{ url('!4dm1n/archive') }}">
-                    <span class="pcoded-micon"><i class="bi bi-box-seam"></i></span>
+                    <span class="pcoded-micon"><i class="ti-archive"></i></span>
                     <span class="pcoded-mtext" data-i18n="nav.form-components.main">Arsip</span>
                 </a>
             </li>
             <li class="{{ request()->is('!4dm1n/docum') ? 'active' : '' }}">
                 <a href="{{ url('!4dm1n/docum') }}">
-                    <span class="pcoded-micon"><i class="bi bi-images"></i></span>
+                    <span class="pcoded-micon"><i class="ti-files"></i></i></span>
                     <span class="pcoded-mtext" data-i18n="nav.form-components.main">Dokumentasi &#10004;</span>
                 </a>
             </li>
@@ -48,31 +48,31 @@
             </li>
             <li class="{{ request()->is('!4dm1n/documentation') ? 'active' : '' }}">
                 <a href="{{ url('!4dm1n/documentation') }}">
-                    <span class="pcoded-micon"><i class="bi bi-images"></i></span>
+                    <span class="pcoded-micon"><i class="ti-book"></i></span>
                     <span class="pcoded-mtext" data-i18n="nav.form-components.main">Artikel</span>
                 </a>
             </li>
             <li class="{{ request()->is('!4dm1n/documentation') ? 'active' : '' }}">
                 <a href="{{ url('!4dm1n/documentation') }}">
-                    <span class="pcoded-micon"><i class="bi bi-images"></i></span>
+                    <span class="pcoded-micon"><i class="ti-pencil"></i></span>
                     <span class="pcoded-mtext" data-i18n="nav.form-components.main">Kuisioner</span>
                 </a>
             </li>
             <li class="{{ request()->is('!4dm1n/documentation') ? 'active' : '' }}">
                 <a href="{{ url('!4dm1n/documentation') }}">
-                    <span class="pcoded-micon"><i class="bi bi-images"></i></span>
+                    <span class="pcoded-micon"><i class="ti-folder"></i></span>
                     <span class="pcoded-mtext" data-i18n="nav.form-components.main">Berkas & Persuratan</span>
                 </a>
             </li>
             <li class="{{ request()->is('!4dm1n/documentation') ? 'active' : '' }}">
                 <a href="{{ url('!4dm1n/documentation') }}">
-                    <span class="pcoded-micon"><i class="bi bi-images"></i></span>
+                    <span class="pcoded-micon"><i class="ti-comment"></i></i></span>
                     <span class="pcoded-mtext" data-i18n="nav.form-components.main">Ask Me Anything</span>
                 </a>
             </li>
             <li class="{{ request()->is('!4dm1n/documentation') ? 'active' : '' }}">
                 <a href="{{ url('!4dm1n/documentation') }}">
-                    <span class="pcoded-micon"><i class="bi bi-images"></i></span>
+                    <span class="pcoded-micon"><i class="ti-email"></i></span>
                     <span class="pcoded-mtext" data-i18n="nav.form-components.main">Pesan</span>
                 </a>
             </li>
@@ -84,7 +84,7 @@
             </li>
             <li class="{{ request()->is('!4dm1n/documentation') ? 'active' : '' }}">
                 <a href="{{ url('!4dm1n/documentation') }}">
-                    <span class="pcoded-micon"><i class="bi bi-images"></i></span>
+                    <span class="pcoded-micon"><i class="ti-video-clapper"></i></span>
                     <span class="pcoded-mtext" data-i18n="nav.form-components.main">Konten</span>
                 </a>
             </li>

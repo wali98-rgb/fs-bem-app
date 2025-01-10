@@ -24,3 +24,10 @@ konsep seperti CRUD BLOG
 konsep seperti CRUD BLOG + middleware
 
 
+# langkah pembuatan fitur
+1. php artisan make:model namaModel -m
+2. php artisan make:controller namaController
+3. buat view resource/views/admin/pages/namaFolder
+4. buat route di routes/web.php
+
+
