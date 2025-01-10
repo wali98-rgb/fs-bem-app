@@ -28,7 +28,7 @@ Route::get('/feedback', function () {
 })->name('feedback');
 
 // Route Admin Session
-Route::prefix('!4dm1n')->group(function () {
+Route::prefix('!4dm1n')->middleware('auth')->group(function () {
     // Route Layouts
     Route::get('/', function () {
         return view('admin.pages.home');
