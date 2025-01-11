@@ -11,6 +11,7 @@ use App\Http\Controllers\DocumentationController;
 use App\Http\Controllers\ProdiController;
 use App\Http\Controllers\ProkerController;
 use App\Http\Controllers\ArchiveController;
+use App\Http\Controllers\NewsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Models\User;
@@ -50,6 +51,14 @@ Route::prefix('!4dm1n')->middleware('auth')->group(function () {
     // Route documentations page
     Route::delete('/docum/{docum}/image/{imageIndex}', [DocumentationController::class, 'deleteImage'])->name('docum.deleteImage');
     Route::get('/docum/{docum}/image/{imageIndex}', [DocumentationController::class, 'showImage'])->name('docum.showImage');
+
+    // Route for News or Berita Acara
+    Route::controller(NewsController::class)->group(function () {
+        Route::get('/news')->name('news.index');
+        Route::post('/news/store')->name('news.store');
+        Route::put('/news/edit/{id}')->name('news.edit');
+        Route::delete('/news/delete/{id}')->name("news.delete");
+    });
 });
 
 // Route Auth
@@ -73,5 +82,3 @@ Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('
 Route::get('email/verify', [VerificationController::class, 'show'])->name('verification.notice');
 Route::get('email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify');
 Route::post('email/resend', [VerificationController::class, 'resend'])->name('verification.resend');
-
-

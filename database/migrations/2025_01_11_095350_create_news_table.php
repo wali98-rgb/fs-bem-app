@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('news', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string("nama_file");
+            $table->string("nama");
             $table->string("jenis_file");
-            $table->text("deskripsi_file");
-            $table->enum("aksi", ['draft', "selesai", "diarsip"])->default('draft');
+            $table->text("deskripsi");
+            $table->datetime("tanggal");
+            $table->enum("status", ['draft', "selesai", "diarsip"])->default('draft');
             $table->timestamps();
         });
     }
