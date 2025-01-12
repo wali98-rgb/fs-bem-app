@@ -54,10 +54,12 @@ Route::prefix('!4dm1n')->middleware('auth')->group(function () {
 
     // Route for News or Berita Acara
     Route::controller(NewsController::class)->group(function () {
-        Route::get('/news')->name('news.index');
-        Route::post('/news/store')->name('news.store');
-        Route::put('/news/edit/{id}')->name('news.edit');
+        Route::get('/news', 'index')->name('news.index');
         Route::delete('/news/delete/{id}')->name("news.delete");
+        Route::get('/news/edit/{id}', 'edit')->name('news.edit');
+        Route::get('/news/create', 'create')->name('news.create');
+        Route::post('/news/create/store', 'store')->name('news.store');
+        Route::put('/news/edit/{id}/store', 'update')->name('news.update');
     });
 });
 
