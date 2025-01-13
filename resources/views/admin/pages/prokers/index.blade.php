@@ -9,7 +9,7 @@
                     <i class="bi bi-activity bg-c-blue"></i>
                     <div class="d-inline">
                         <h4>Program Kerja Departemen</h4>
-                        <span>Program Kerja yang dilakukan oleh setiap departemen kabinet periode 2023/2024.</span>
+                        <span>Program Kerja yang dilakukan oleh setiap departemen kabinet periode 2024/2025.</span>
                     </div>
                 </div>
             </div>
