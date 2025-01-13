@@ -11,6 +11,7 @@ use App\Http\Controllers\DocumentationController;
 use App\Http\Controllers\ProdiController;
 use App\Http\Controllers\ProkerController;
 use App\Http\Controllers\ArchiveController;
+use App\Http\Controllers\ContentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Models\User;
@@ -40,6 +41,7 @@ Route::prefix('!4dm1n')->middleware('auth')->group(function () {
     Route::resource('docum', DocumentationController::class);
     Route::resource('user', UserController::class);
     Route::resource('archive', ArchiveController::class);
+    Route::resource('content', ContentController::class);
 
     // Jika di UserController tidak bisa memakai route user/{lain-lain} selain dari route resource controller lagi
     Route::get('/user_access', [UserController::class, 'showAccess'])->name('user.access');
@@ -50,6 +52,14 @@ Route::prefix('!4dm1n')->middleware('auth')->group(function () {
     // Route documentations page
     Route::delete('/docum/{docum}/image/{imageIndex}', [DocumentationController::class, 'deleteImage'])->name('docum.deleteImage');
     Route::get('/docum/{docum}/image/{imageIndex}', [DocumentationController::class, 'showImage'])->name('docum.showImage');
+    // Route content
+    // Route untuk daftar konten
+    Route::get('/contents', [ContentController::class, 'index'])->name('content.index');
+    // Route untuk form tambah konten
+    Route::get('/contents/create', [ContentController::class, 'create'])->name('content.create');
+    // Route untuk menyimpan data konten
+    Route::post('/contents/store', [ContentController::class, 'store'])->name('content.store');
+
 });
 
 // Route Auth
