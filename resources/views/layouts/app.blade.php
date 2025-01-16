@@ -85,6 +85,7 @@
     </div>
 
     @yield('js_auth')
+    @include('sweetalert::alert')
 </body>
 
 </html>

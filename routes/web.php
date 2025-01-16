@@ -11,15 +11,19 @@ use App\Http\Controllers\DocumentationController;
 use App\Http\Controllers\ProdiController;
 use App\Http\Controllers\ProkerController;
 use App\Http\Controllers\ArchiveController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ContentController;
+use App\Http\Controllers\ForPassController;
+use App\Http\Controllers\SocialiteController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Models\User;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return view('client.master');
-});
+})->name('dashboard');
 Route::get('/about', function () {
     return view('client.pages.about');
 })->name('about');
@@ -59,29 +63,35 @@ Route::prefix('!4dm1n')->middleware('auth')->group(function () {
     Route::get('/contents/create', [ContentController::class, 'create'])->name('content.create');
     // Route untuk menyimpan data konten
     Route::post('/contents/store', [ContentController::class, 'store'])->name('content.store');
-
 });
 
 // Route Auth
 // Login Routes
-Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('login', [LoginController::class, 'login']);
+Route::get('login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('login', [AuthController::class, 'login']);
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
-// Register Routes
-Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
-Route::post('register', [RegisterController::class, 'register']);
+// Login dengan Google
+Route::get('redirect', [SocialiteController::class, 'redirect'])->name('redirect');
+Route::get('callback', [SocialiteController::class, 'callback'])->name('callback');
 
+// Register Routes
+Route::get('register', [AuthController::class, 'showRegistrationForm'])->name('register');
+Route::post('register', [AuthController::class, 'register'])->name('register.action');
 
 // Password Reset Routes
-Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
-Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
-Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
-Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
+// Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+// Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+// Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+// Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
+
+Route::get('forgot/password', [ForPassController::class, 'showForgotPasswordForm'])->name('forgot.password.get');
+Route::post('forgot/password', [ForPassController::class, 'submitForgotPasswordForm'])->name('forgot.password.post');
+Route::get('reset/password/{token}', [ForPassController::class, 'showResetPasswordForm'])->name('reset.password.get');
+Route::post('reset/password/{token}', [ForPassController::class, 'submitResetPasswordForm'])->name('reset.password.post');
 
 // Email Verification Routes
-Route::get('email/verify', [VerificationController::class, 'show'])->name('verification.notice');
-Route::get('email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify');
-Route::post('email/resend', [VerificationController::class, 'resend'])->name('verification.resend');
-
-
+Route::get('/email/verify', [AuthController::class, 'verifyNotice'])->middleware('auth')->name('verification.notice');
+Route::get('/email/verify-resend', [AuthController::class, 'verifyResend'])->middleware('auth')->name('verification.resend.link');
+Route::get('/verify-mail/{token}', [AuthController::class, 'verifyEmail'])->name('verification.verify');
+Route::post('/email/verification-notification', [AuthController::class, 'verifyHandler'])->name('verification.send');

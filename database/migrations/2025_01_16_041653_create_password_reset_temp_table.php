@@ -11,9 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->unsignedBigInteger('prodi_id')->nullable();
-            $table->foreign('prodi_id')->references('id')->on('prodis');
+        Schema::create('password_reset_temp', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('email');
+            $table->string('key');
+            $table->dateTime('expDate');
+            $table->timestamps();
         });
     }
 
@@ -22,9 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropForeign(['prodi_id']);
-            $table->dropColumn(['prodi_id']);
-        });
+        Schema::dropIfExists('password_reset_temp');
     }
 };

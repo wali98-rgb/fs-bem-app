@@ -23,7 +23,8 @@
                 <div class="col-sm-12">
                     <!-- Authentication card start -->
                     <div class="login-card card-block auth-body mr-auto ml-auto">
-                        <form class="md-float-material" action="{{ route('login') }}" method="POST">
+                        <form class="md-float-material" action="{{ route('reset.password.post', ['token' => $token]) }}"
+                            method="POST" name="update">
                             @csrf
                             <div class="text-center">
                                 <img src="{{ asset('plugins/frontend/img/bem.png') }}" alt="logo.png" width="15%">
@@ -32,73 +33,49 @@
                             <div class="auth-box">
                                 <div class="row m-b-10">
                                     <div class="col-md-12">
-                                        <h3 class="text-center mt-1 txt-primary">Login</h3>
+                                        <h3 class="text-center mt-1 txt-primary">Reset Password</h3>
                                     </div>
                                 </div>
                                 <hr style="color: black" />
                                 <div class="input-group">
-                                    <input id="email" type="email" class="form-control" name="email" required
-                                        autocomplete="email" autofocus placeholder="Masukkan Alamat Email"
-                                        @if (isset($_COOKIE['email'])) value="{{ $_COOKIE['email'] }}"
-                                        @else value="{{ old('email') }}" @endif>
-                                </div>
-                                <div class="input-group mb-1">
-                                    <input id="password" type="password" class="form-control" name="password" required
-                                        autocomplete="current-password" placeholder="Masukkan Password"
-                                        @if (isset($_COOKIE['password'])) value="{{ $_COOKIE['password'] }}"
-                                        @else value="{{ old('password') }}" @endif>
+                                    <p style="color: black; font-size: .9rem; text-align: left;" class="m-0">
+                                        Silahkan masukkan password yang baru.
+                                    </p>
                                 </div>
 
-                                <div class="input-group d-flex justify-content-end mt-0 mb-2">
+                                <div class="input-group">
+                                    <input id="password" type="password" class="form-control" name="password"
+                                        value="{{ old('password') }}" required autocomplete="password" autofocus
+                                        placeholder="Masukkan Password Baru">
+                                </div>
+
+                                <div class="input-group">
+                                    <input id="password_confirmation" type="password" class="form-control"
+                                        name="password_confirmation" value="{{ old('password_confirmation') }}" required
+                                        autocomplete="password_confirmation" autofocus
+                                        placeholder="Ulangi Password Anda yang Baru">
+                                </div>
+
+                                <div class="input-group">
                                     <label class="form-check-label text-muted">
                                         <input type="checkbox" class="form-check-input" onclick="showPassword()"> Show
                                         Password
                                     </label>
                                 </div>
 
-                                <div class="row m-t-25 text-left">
-                                    <div class="col-sm-6 col-xs-12">
-                                        <div class="checkbox-fade fade-in-primary">
-                                            <label>
-                                                <input type="checkbox" name="remember"
-                                                    @if (isset($_COOKIE['email'])) checked @endif>
-                                                <span class="cr"><i
-                                                        class="cr-icon icofont icofont-ui-check txt-primary"></i></span>
-                                                <span class="text-inverse">Remember me</span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6 col-xs-12 forgot-phone text-right">
-                                        <a href="{{ route('forgot.password.get') }}"
-                                            class="text-right f-w-600 text-inverse">
-                                            Lupa Password?</a>
-                                    </div>
-                                </div>
-                                <div class="row m-t-30">
-                                    <div class="col-md-12">
-                                        <button type="submit"
-                                            class="btn btn-primary btn-md btn-block waves-effect text-center m-b-5">Login</button>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <p style="color: black; font-size: .9rem" class="m-b-5">atau</p>
-                                    </div>
-                                </div>
-
                                 <div class="row m-t-30 m-b-10">
                                     <div class="col-md-12">
-                                        <a href="{{ route('redirect') }}"
-                                            class="btn btn-danger d-flex align-items-center justify-content-center">
-                                            <i class="bi bi-google"></i>
-                                            Login dengan Google
-                                        </a>
+                                        <button type="submit"
+                                            class="btn btn-primary btn-md btn-block waves-effect text-center">Reset
+                                            Password</button>
                                     </div>
                                 </div>
 
-                                <p class="text-inverse text-left m-b-0">Belum punya akun? <a
-                                        href="{{ route('register') }}">Register Sekarang.</a></p>
+                                <p class="text-inverse text-left m-b-0">
+                                    <a href="{{ route('login') }}">
+                                        Kembali ke login.
+                                    </a>
+                                </p>
 
                             </div>
                         </form>
@@ -130,6 +107,13 @@
     <script type="text/javascript">
         function showPassword() {
             var x = document.getElementById("password");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+
+            var x = document.getElementById("password_confirmation");
             if (x.type === "password") {
                 x.type = "text";
             } else {
