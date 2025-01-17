@@ -43,7 +43,7 @@
                     <div class="card-block-small">
                         <i class="icofont icofont-warning-alt bg-c-green card1-icon"></i>
                         <span class="text-c-green f-w-600">Total Konten</span>
-                        {{-- <h4>{{ $contents->total() }}</h4> --}}
+                        <h4>{{ \App\Models\Content::count() }}</h4>
                         <div>
                             <span class="f-left m-t-10 text-muted">
                                 <i class="text-c-green f-16 icofont icofont-tag m-r-10"></i>Tracked
