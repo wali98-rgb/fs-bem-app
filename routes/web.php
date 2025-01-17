@@ -22,7 +22,7 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
-    return view('client.master');
+    return view('client.app');
 })->name('dashboard');
 Route::get('/about', function () {
     return view('client.pages.about');
