@@ -13,7 +13,7 @@ class ContentController extends Controller
      */
     public function index()
     {
-        $contents = Content::orderBy('date', 'desc')->paginate(10); // Menampilkan data dengan pagination
+        $contents = Content::all(); // Menampilkan data dengan pagination
         return view('admin.pages.contents.index', compact('contents')); // View daftar konten
     }
 
