@@ -12,6 +12,7 @@ use App\Http\Controllers\ProdiController;
 use App\Http\Controllers\ProkerController;
 use App\Http\Controllers\ArchiveController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ContentController;
 use App\Http\Controllers\ForPassController;
 use App\Http\Controllers\SocialiteController;
@@ -21,9 +22,7 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Auth;
 
-Route::get('/', function () {
-    return view('client.app');
-})->name('dashboard');
+Route::get('/', [ClientController::class, 'home'])->name('dashboard');
 Route::get('/about', function () {
     return view('client.pages.about');
 })->name('about');

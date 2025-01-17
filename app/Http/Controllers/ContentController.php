@@ -41,9 +41,15 @@ class ContentController extends Controller
         ]);
 
         // Jika ada file yang diupload
-        $filePath = null;
+        $contentImg = null;
         if ($request->hasFile('content')) {
-            $filePath = $request->file('content')->store('uploads', 'public');
+            // $filePath = $request->file('content')->store('uploads', 'public');
+            $content = $request->file('content');
+            $contentImg = time() . '-' . $content->hashName();
+            $content->move(public_path('images/content_img'), $contentImg);
+            $filePath = 'images/content_img/' . $contentImg;
+        } else {
+            $filePath = null;
         }
 
         // Simpan data ke database
