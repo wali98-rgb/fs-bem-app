@@ -10,7 +10,7 @@ class Department extends Model
     use HasFactory;
 
     protected $table = 'departments';
-    protected $fillable = ['name_dpt'];
+    protected $fillable = ['name_dpt', 'kode_dpt'];
 
     public function user()
     {

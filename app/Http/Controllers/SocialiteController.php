@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Str;
 
 class SocialiteController extends Controller
 {
@@ -34,11 +35,14 @@ class SocialiteController extends Controller
             $email = auth()->user()->email;
             $user = User::where('email', $email)->first();
 
+            $user->verification_id = Str::random(32);
+            $user->save();
+
             $baseUrl = config('app.url');
             $verificationToken = $user->verification_id;
             $encryptedToken = encrypt($verificationToken);
 
-            $verificationlink = $baseUrl . '/verify-mail/' . $encryptedToken;
+            $verificationlink = $baseUrl . '/verify-code/' . $encryptedToken;
 
             Mail::to($email)->send(new VerificationMail($verificationlink));
 

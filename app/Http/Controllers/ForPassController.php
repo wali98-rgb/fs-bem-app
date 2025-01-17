@@ -44,7 +44,7 @@ class ForPassController extends Controller
             $sisaWaktu = intval($timeRemaining);
 
             if ($elapsedTime < $expiredTime) {
-                Alert::alert('Gagal Memuat', "Permintaan reset password akan dikirim lagi dalam $sisaWaktu detik.", 'error');
+                Alert::alert('Pending', "Permintaan reset password akan dikirim lagi dalam $sisaWaktu detik.", 'error');
                 return redirect()->route('forgot.password.get')->withInput();
             }
         }
@@ -82,7 +82,7 @@ class ForPassController extends Controller
         $elapsedTime = $expiredDate->diffInMinutes(Carbon::now());
 
         if ($elapsedTime >= $expiredTime) {
-            Alert::alert('Kedaluwarsa', 'Tautan reset password telah kedaluwarsa.', 'error');
+            Alert::alert('Kedaluwarsa', 'Tautan reset password telah kedaluwarsa. Coba lagi.', 'error');
             return redirect()->route('forgot.password.get');
         }
 
@@ -110,7 +110,7 @@ class ForPassController extends Controller
         $elapsedTime = $expiredDate->diffInMinutes(Carbon::now());
 
         if ($elapsedTime >= $expiredTime) {
-            Alert::alert('Kedaluwarsa', 'Tautan reset password telah kedaluwarsa.', 'error');
+            Alert::alert('Kedaluwarsa', 'Tautan reset password telah kedaluwarsa. Coba lagi.', 'error');
             return redirect()->route('forgot.password.get');
         }
 

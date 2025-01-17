@@ -79,12 +79,7 @@ Route::get('callback', [SocialiteController::class, 'callback'])->name('callback
 Route::get('register', [AuthController::class, 'showRegistrationForm'])->name('register');
 Route::post('register', [AuthController::class, 'register'])->name('register.action');
 
-// Password Reset Routes
-// Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
-// Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
-// Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
-// Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
-
+// Forgot Password Routes
 Route::get('forgot/password', [ForPassController::class, 'showForgotPasswordForm'])->name('forgot.password.get');
 Route::post('forgot/password', [ForPassController::class, 'submitForgotPasswordForm'])->name('forgot.password.post');
 Route::get('reset/password/{token}', [ForPassController::class, 'showResetPasswordForm'])->name('reset.password.get');
@@ -93,5 +88,10 @@ Route::post('reset/password/{token}', [ForPassController::class, 'submitResetPas
 // Email Verification Routes
 Route::get('/email/verify', [AuthController::class, 'verifyNotice'])->middleware('auth')->name('verification.notice');
 Route::get('/email/verify-resend', [AuthController::class, 'verifyResend'])->middleware('auth')->name('verification.resend.link');
+Route::get('/email/verify-resend-mail', [AuthController::class, 'verifyResendMail'])->middleware('auth')->name('verification.resend.mail');
 Route::get('/verify-mail/{token}', [AuthController::class, 'verifyEmail'])->name('verification.verify');
 Route::post('/email/verification-notification', [AuthController::class, 'verifyHandler'])->name('verification.send');
+
+// Code Division Routes
+Route::get('/verify-code/{token}', [AuthController::class, 'showCodeDivision'])->middleware('auth')->name('verification.code.get');
+Route::post('/verify-code/{token}', [AuthController::class, 'submitCodeDivision'])->middleware('auth')->name('verification.code.post');

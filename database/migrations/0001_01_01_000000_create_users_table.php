@@ -23,6 +23,7 @@ return new class extends Migration
             $table->enum('role', ['superadmin', 'admin', 'bem'])->default('bem');
             $table->string('verification_id', length: 32)->nullable();
             $table->enum('verification_status', [0, 1])->default(0);
+            $table->enum('status_quilify', ['Y', 'N'])->default('N');
             $table->rememberToken();
             $table->timestamps();
         });
