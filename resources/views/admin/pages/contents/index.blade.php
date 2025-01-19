@@ -62,16 +62,16 @@
                                     <td>
                                         @if ($content->content && in_array($content->media_type, ['image']))
                                             <a href="#"
-                                                onclick="showImage('{{ asset('storage/' . $content->content) }}')">
+                                                onclick="showImage('{{ asset($content->content) }}')">
                                                 <img src="{{ asset($content->content) }}" alt="Konten" width="100">
                                             </a>
                                         @elseif ($content->content && $content->media_type == 'video')
                                             <video width="200" controls>
-                                                <source src="{{ asset('storage/' . $content->content) }}" type="video/mp4">
+                                                <source src="{{ asset($content->content) }}" type="video/mp4">
                                                 Browser Anda tidak mendukung video tag.
                                             </video>
                                         @elseif ($content->content && $content->media_type == 'text')
-                                            <a href="{{ asset('storage/' . $content->content) }}" target="_blank">Lihat
+                                            <a href="{{ asset($content->content) }}" target="_blank">Lihat
                                                 File</a>
                                         @else
                                             <span class="text-muted">Tidak ada file</span>
