@@ -34,13 +34,30 @@
       <a href="{{ route('news.index') }}" class="btn btn-danger btn-round">Kembali ke list Berita Acara</a>
     </div>
     <div class="card-block">
-      <form method="POST" action="{{ route('department.store') }}">
+      <form method="POST" enctype="multipart/form-data" action="{{ route('news.store') }}">
         @csrf
         <div class="form-group row">
           <label class="col-sm-2 col-form-label">Nama Berita Acara</label>
           <div class="col-sm-10">
-            <input type="text" value="{{ old('name_dpt') }}" name="name_dpt" class="form-control"
-              placeholder="Contoh: Kominfo" autofocus>
+            <input type="text" value="{{ old('nama') }}" name="nama" class="form-control" placeholder="Contoh: LDKM" autofocus>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Tanggal Dilaksanakan</label>
+          <div class="col-sm-10">
+            <input type="date" value="{{ old('tanggal') }}" name="tanggal" class="form-control" autofocus>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Deskripsi</label>
+          <div class="col-sm-10">
+            <textarea class="form-control" name="deskripsi" autofocus> {{ old('deskripsi') }} </textarea>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">File Upload</label>
+          <div class="col-sm-10">
+            <input type="file" value="{{ old('file_berita') }}" name="file_berita" class="form-control">
           </div>
         </div>
         <div class="d-flex justify-content-end">
