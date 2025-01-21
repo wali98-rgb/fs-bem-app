@@ -55,13 +55,17 @@ Route::prefix('!4dm1n')->middleware(['auth', 'user-access:superadmin,admin'])->g
     // Route documentations page
     Route::delete('/docum/{docum}/image/{imageIndex}', [DocumentationController::class, 'deleteImage'])->name('docum.deleteImage');
     Route::get('/docum/{docum}/image/{imageIndex}', [DocumentationController::class, 'showImage'])->name('docum.showImage');
-    // Route content
     // Route untuk daftar konten
     Route::get('/contents', [ContentController::class, 'index'])->name('content.index');
     // Route untuk form tambah konten
     Route::get('/contents/create', [ContentController::class, 'create'])->name('content.create');
     // Route untuk menyimpan data konten
     Route::post('/contents/store', [ContentController::class, 'store'])->name('content.store');
+
+    // Route untuk menampilkan arsip
+    Route::get('/archives/{archive}/edit', [ArchiveController::class, 'edit'])->name('archive.edit');
+    // Mengupdate data arsip
+    Route::put('/archives/{archive}', [ArchiveController::class, 'update'])->name('archive.update');
 });
 
 // Route Auth
