@@ -32,7 +32,7 @@ Route::get('/feedback', function () {
 })->name('feedback');
 
 // Route Admin Session
-Route::prefix('!4dm1n')->middleware('auth')->group(function () {
+Route::prefix('!4dm1n')->middleware(['auth', 'user-access:superadmin,admin'])->group(function () {
     // Route Layouts
     Route::get('/', function () {
         return view('admin.pages.home');
@@ -69,32 +69,36 @@ Route::prefix('!4dm1n')->middleware('auth')->group(function () {
 });
 
 // Route Auth
-// Login Routes
-Route::get('login', [AuthController::class, 'showLoginForm'])->name('login');
-Route::post('login', [AuthController::class, 'login']);
-Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+Route::middleware('not-quilify')->group(function () {
+    // Login Routes
+    Route::get('login', [AuthController::class, 'showLoginForm'])->name('login');
+    Route::post('login', [AuthController::class, 'login']);
 
-// Login dengan Google
-Route::get('redirect', [SocialiteController::class, 'redirect'])->name('redirect');
-Route::get('callback', [SocialiteController::class, 'callback'])->name('callback');
+    // Login dengan Google
+    Route::get('redirect', [SocialiteController::class, 'redirect'])->name('redirect');
+    Route::get('callback', [SocialiteController::class, 'callback'])->name('callback');
 
-// Register Routes
-Route::get('register', [AuthController::class, 'showRegistrationForm'])->name('register');
-Route::post('register', [AuthController::class, 'register'])->name('register.action');
+    // Register Routes
+    Route::get('register', [AuthController::class, 'showRegistrationForm'])->name('register');
+    Route::post('register', [AuthController::class, 'register'])->name('register.action');
 
-// Forgot Password Routes
-Route::get('forgot/password', [ForPassController::class, 'showForgotPasswordForm'])->name('forgot.password.get');
-Route::post('forgot/password', [ForPassController::class, 'submitForgotPasswordForm'])->name('forgot.password.post');
-Route::get('reset/password/{token}', [ForPassController::class, 'showResetPasswordForm'])->name('reset.password.get');
-Route::post('reset/password/{token}', [ForPassController::class, 'submitResetPasswordForm'])->name('reset.password.post');
+    // Forgot Password Routes
+    Route::get('forgot/password', [ForPassController::class, 'showForgotPasswordForm'])->name('forgot.password.get');
+    Route::post('forgot/password', [ForPassController::class, 'submitForgotPasswordForm'])->name('forgot.password.post');
+    Route::get('reset/password/{token}', [ForPassController::class, 'showResetPasswordForm'])->name('reset.password.get');
+    Route::post('reset/password/{token}', [ForPassController::class, 'submitResetPasswordForm'])->name('reset.password.post');
 
-// Email Verification Routes
-Route::get('/email/verify', [AuthController::class, 'verifyNotice'])->middleware('auth')->name('verification.notice');
-Route::get('/email/verify-resend', [AuthController::class, 'verifyResend'])->middleware('auth')->name('verification.resend.link');
-Route::get('/email/verify-resend-mail', [AuthController::class, 'verifyResendMail'])->middleware('auth')->name('verification.resend.mail');
-Route::get('/verify-mail/{token}', [AuthController::class, 'verifyEmail'])->name('verification.verify');
-Route::post('/email/verification-notification', [AuthController::class, 'verifyHandler'])->name('verification.send');
+    // Email Verification Routes
+    Route::get('/email/verify', [AuthController::class, 'verifyNotice'])->middleware('auth')->name('verification.notice');
+    Route::get('/email/verify-resend', [AuthController::class, 'verifyResend'])->middleware('auth')->name('verification.resend.link');
+    Route::get('/email/verify-resend-mail', [AuthController::class, 'verifyResendMail'])->middleware('auth')->name('verification.resend.mail');
+    Route::get('/verify-mail/{token}', [AuthController::class, 'verifyEmail'])->name('verification.verify');
+    Route::post('/email/verification-notification', [AuthController::class, 'verifyHandler'])->name('verification.send');
 
-// Code Division Routes
-Route::get('/verify-code/{token}', [AuthController::class, 'showCodeDivision'])->middleware('auth')->name('verification.code.get');
-Route::post('/verify-code/{token}', [AuthController::class, 'submitCodeDivision'])->middleware('auth')->name('verification.code.post');
+    // Code Division Routes
+    Route::get('/verify-code/{token}', [AuthController::class, 'showCodeDivision'])->middleware('auth')->name('verification.code.get');
+    Route::post('/verify-code/{token}', [AuthController::class, 'submitCodeDivision'])->middleware('auth')->name('verification.code.post');
+});
+
+// Route Logout
+Route::post('logout', [LoginController::class, 'logout'])->middleware('auth')->name('logout');

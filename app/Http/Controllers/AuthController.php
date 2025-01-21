@@ -46,38 +46,44 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
         $email = $request->email;
         $exist = User::where('email', $email)->exists();
+        $hasPassword = User::where('email', $email)->first();
 
         if ($exist) {
-            if (Auth::attempt($credentials)) {
-                $user = Auth::user();
+            if ($hasPassword->password !== null) {
+                if (Auth::attempt($credentials)) {
+                    $user = Auth::user();
 
-                if (isset($request->remember) && !empty($request->remember)) {
-                    setcookie('email', $request->email, time() + 3600);
-                    setcookie('password', $request->password, time() + 3600);
+                    if (isset($request->remember) && !empty($request->remember)) {
+                        setcookie('email', $request->email, time() + 3600);
+                        setcookie('password', $request->password, time() + 3600);
+                    } else {
+                        setcookie('email', '');
+                        setcookie('password', '');
+                    }
+
+                    if (!$user->verification_status == '1') {
+                        // Auth::logout();
+                        Alert::alert('Login Gagal', 'Akun anda belum terverifikasi. Silahkan verifikasi melalui email anda!', 'error');
+                        return redirect()->route('verification.resend.link')->with('login', true);
+                    } else if ($user->verification_status == '1' && $user->status_quilify == 'N') {
+                        Alert::alert('Login Gagal', 'Akun anda belum terverifikasi. Silahkan verifikasi melalui email anda!', 'error');
+                        return redirect()->route('verification.resend.link')->with('login', true);
+                    } else if ($user->status_quilify == 'N') {
+                        Alert::alert('Login Gagal', 'Akun anda belum terverifikasi. Silahkan verifikasi melalui email anda!', 'error');
+                        return redirect()->route('verification.resend.link')->with('login', true);
+                    }
+
+                    if (in_array($user->role, ['superadmin', 'admin'])) {
+                        return redirect()->route('home');
+                    } else if ($user->role === 'bem') {
+                        return redirect()->route('dashboard');
+                    }
                 } else {
-                    setcookie('email', '');
-                    setcookie('password', '');
+                    Alert::alert('Galat', 'Pastikan email atau password benar!', 'error');
+                    return redirect()->route('login')->withInput();
                 }
-
-                if (!$user->verification_status == '1') {
-                    // Auth::logout();
-                    Alert::alert('Login Gagal', 'Akun anda belum terverifikasi. Silahkan verifikasi melalui email anda!', 'error');
-                    return redirect()->route('verification.resend.link')->with('login', true);
-                } else if ($user->verification_status == '1' && $user->status_quilify == 'N') {
-                    Alert::alert('Login Gagal', 'Akun anda belum terverifikasi. Silahkan verifikasi melalui email anda!', 'error');
-                    return redirect()->route('verification.resend.link')->with('login', true);
-                } else if ($user->status_quilify == 'N') {
-                    Alert::alert('Login Gagal', 'Akun anda belum terverifikasi. Silahkan verifikasi melalui email anda!', 'error');
-                    return redirect()->route('verification.resend.link')->with('login', true);
-                }
-
-                if (auth()->user()->role == 'superadmin' || 'admin') {
-                    return redirect()->route('home');
-                } else if (auth()->user()->role == 'bem') {
-                    return redirect()->route('dashboard');
-                }
-            } else {
-                Alert::alert('Galat', 'Pastikan email atau password benar!', 'error');
+            } else if ($hasPassword->password === null) {
+                Alert::alert('Login Gagal', 'Password belum diatur.', 'error');
                 return redirect()->route('login')->withInput();
             }
         } else {
