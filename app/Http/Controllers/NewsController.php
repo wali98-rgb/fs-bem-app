@@ -9,8 +9,7 @@ class NewsController extends Controller
 {
     public function index()
     {
-        $news = News::all();
-        return view("admin.pages.news.index", compact(['news']));
+        return view("admin.pages.news.index")->with("news", News::all());
     }
 
     public function create()
@@ -18,10 +17,50 @@ class NewsController extends Controller
         return view("admin.pages.news.create");
     }
 
-    public function edit()
+    public function store(Request $request)
     {
-        return view("admin.pages.news.edit");
+        $request->validate([
+            'file_berita' => 'required|max:2048',
+            'nama' => 'required',
+            'deskripsi' => 'required',
+            'tanggal' => 'required'
+        ]);
+
+        if ($request->hasFile('file_berita')) {
+            $file = $request->file('file_berita');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $file->storeAs(public_path('berita_acara'), $fileName);
+        }
+
+        News::create([
+            'file_berita' => $fileName,
+            'nama' => $request->nama,
+            'tanggal' => $request->tanggal,
+            'deskripsi' => $request->deskripsi
+        ]);
+
+        return redirect()->route('news.index')->with('message', "Berita Acara berhasil ditambahkan.");
     }
 
-    public function delete() {}
+    public function edit($id)
+    {
+        return view("admin.pages.news.edit")->with('news', News::findOrFail($id));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'file_berita' => 'required|max:2048',
+            'nama' => 'required',
+            'deskripsi' => 'required',
+            'tanggal' => 'required'
+        ]);
+
+        $news = News::findOrFail($id);
+    }
+
+    public function delete($id)
+    {
+        return redirect()->route('news.index')->with("message", "Berita Acara berhasil dihapus.");
+    }
 }
