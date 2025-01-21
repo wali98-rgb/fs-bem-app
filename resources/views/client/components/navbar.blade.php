@@ -1,6 +1,7 @@
 <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
-    <a href={{ url('/')}} class="navbar-brand d-flex align-items-center px-4 px-lg-5">
-        <h2 class="m-0 text-primer"> <img class="img-fluid me-2" src="{{ asset('plugins/frontend/img/bem.png') }}" alt="" style="max-width: 50px; height: auto;">BEM INDONESIA MANDIRI</h2>
+    <a href={{ url('/') }} class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+        <h2 class="m-0 text-primer"> <img class="img-fluid me-2" src="{{ asset('plugins/frontend/img/bem.png') }}"
+                alt="" style="max-width: 50px; height: auto;">BEM INDONESIA MANDIRI</h2>
     </a>
     <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
         <span class="navbar-toggler-icon"></span>
