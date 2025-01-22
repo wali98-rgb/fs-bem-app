@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\News;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class NewsController extends Controller
 {
@@ -57,10 +58,16 @@ class NewsController extends Controller
         ]);
 
         $news = News::findOrFail($id);
+        $news->update([$request->all()]);
+
+        return redirect()->route('news.index')->with('message', "Berita Acarq sudah diupdate.");
     }
 
     public function delete($id)
     {
+        $news = News::findOrFail($id);
+        Storage::delete('berita_acara/' . $news->file_berita);
+        $news->delete();
         return redirect()->route('news.index')->with("message", "Berita Acara berhasil dihapus.");
     }
 }

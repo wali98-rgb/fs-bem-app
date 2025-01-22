@@ -20,7 +20,7 @@
             </a>
           </li>
           <li class="breadcrumb-item"><a href="{{ route('home') }}">Halaman Utama</a></li>
-          <li class="breadcrumb-item"><a href="{{ route('news.index') }}">Departemen</a>
+          <li class="breadcrumb-item"><a href="{{ route('news.index') }}">Berita Acara</a>
           </li>
         </ul>
       </div>
@@ -31,7 +31,7 @@
 <div class="page-body">
   <div class="card">
     <div class="card-header">
-      <a href="{{ route('news.create') }}" class="btn btn-primary btn-round">Tambah Departemen Kabinet</a>
+      <a href="{{ route('news.create') }}" class="btn btn-primary btn-round">Tambah</a>
       <div class="card-header-right">
         <ul class="list-unstyled card-option">
           <li><i class="icofont icofont-simple-left "></i></li>
@@ -47,16 +47,34 @@
           <thead>
             <tr>
               <th style="text-align: center">#</th>
-              <th>Departemen Kabinet</th>
-              <th style="text-align: center">Tindakan</th>
+              <th>Tanggal Dilaksanakan</th>
+              <th>Status</th>
+              <th>File</th>
+              <th>Nama Acara</th>
+              <th>Deskripsi</th>
+              <th style="text-align: center">Aksi</th>
             </tr>
           </thead>
           <tbody>
             @forelse ($news as $n)
             <tr>
               <th style="text-align: center" scope="row">{{ $loop->iteration }}</th>
-              <td>{{ $n->status }}</td>
               <td>{{ $n->tanggal }}</td>
+              <td>
+                @switch($n->status)
+                @case('open')
+                <span></span>
+                @break
+                @case('pending')
+                <span></span>
+                @break
+                @case('done')
+                <span></span>
+                @break
+                @default
+                <span></span>
+                @endswitch
+              </td>
               <td>{{ $n->file_berita }}</td>
               <td>{{ $n->nama }}</td>
               <td>{{ $n->deskripsi }}</td>
