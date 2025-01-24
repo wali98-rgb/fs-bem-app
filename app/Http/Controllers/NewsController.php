@@ -60,7 +60,7 @@ class NewsController extends Controller
         $news = News::findOrFail($id);
         $news->update([$request->all()]);
 
-        return redirect()->route('news.index')->with('message', "Berita Acarq sudah diupdate.");
+        return redirect()->route('news.index')->with('message', "Berita Acara sudah diupdate.");
     }
 
     public function delete($id)
