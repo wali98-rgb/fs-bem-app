@@ -11,6 +11,8 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/icon/icofont/css/icofont.css') }}">
     <!-- Style.css -->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
+    {{-- Bootstrap Icon --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 @endsection
 
 @section('content')
@@ -28,57 +30,73 @@
                                 <h2 class="" style="font-weight: 700">BEM Indonesia Mandiri</h2>
                             </div>
                             <div class="auth-box">
-                                <div class="row m-b-20">
+                                <div class="row m-b-10">
                                     <div class="col-md-12">
-                                        <h3 class="text-left txt-primary">Login</h3>
+                                        <h3 class="text-center mt-1 txt-primary">Login</h3>
                                     </div>
                                 </div>
-                                <hr />
+                                <hr style="color: black" />
                                 <div class="input-group">
-                                    <input id="email" type="email"
-                                        class="form-control @error('email') is-invalid @enderror" name="email"
-                                        value="{{ old('email') }}" required autocomplete="email" autofocus
-                                        placeholder="Masukkan Alamat Email">
-                                    <span class="md-line"></span>
-                                    @error('email')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
+                                    <input id="email" type="email" class="form-control" name="email" required
+                                        autocomplete="email" autofocus placeholder="Masukkan Alamat Email"
+                                        @if (isset($_COOKIE['email'])) value="{{ $_COOKIE['email'] }}"
+                                        @else value="{{ old('email') }}" @endif>
                                 </div>
-                                <div class="input-group">
-                                    <input id="password" type="password"
-                                        class="form-control @error('password') is-invalid @enderror" name="password"
-                                        required autocomplete="current-password" placeholder="Masukkan Password">
-                                    <span class="md-line"></span>
-                                    @error('password')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
+                                <div class="input-group mb-1">
+                                    <input id="password" type="password" class="form-control" name="password" required
+                                        autocomplete="current-password" placeholder="Masukkan Password"
+                                        @if (isset($_COOKIE['password'])) value="{{ $_COOKIE['password'] }}"
+                                        @else value="{{ old('password') }}" @endif>
                                 </div>
+
+                                <div class="input-group d-flex justify-content-end mt-0 mb-2">
+                                    <label class="form-check-label text-muted">
+                                        <input type="checkbox" class="form-check-input" onclick="showPassword()"> Show
+                                        Password
+                                    </label>
+                                </div>
+
                                 <div class="row m-t-25 text-left">
-                                    <div class="col-sm-7 col-xs-12">
+                                    <div class="col-sm-6 col-xs-12">
                                         <div class="checkbox-fade fade-in-primary">
                                             <label>
-                                                <input type="checkbox" value="">
+                                                <input type="checkbox" name="remember"
+                                                    @if (isset($_COOKIE['email'])) checked @endif>
                                                 <span class="cr"><i
                                                         class="cr-icon icofont icofont-ui-check txt-primary"></i></span>
                                                 <span class="text-inverse">Remember me</span>
                                             </label>
                                         </div>
                                     </div>
-                                    <div class="col-sm-5 col-xs-12 forgot-phone text-right">
-                                        <a href="auth-reset-password.html" class="text-right f-w-600 text-inverse">
-                                            Forgot Your Password?</a>
+                                    <div class="col-sm-6 col-xs-12 forgot-phone text-right">
+                                        <a href="{{ route('forgot.password.get') }}"
+                                            class="text-right f-w-600 text-inverse">
+                                            Lupa Password?</a>
                                     </div>
                                 </div>
                                 <div class="row m-t-30">
                                     <div class="col-md-12">
                                         <button type="submit"
-                                            class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">Login</button>
+                                            class="btn btn-primary btn-md btn-block waves-effect text-center m-b-5">Login</button>
                                     </div>
                                 </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <p style="color: black; font-size: .9rem" class="m-b-5">atau</p>
+                                    </div>
+                                </div>
+
+                                <div class="row m-t-30 m-b-10">
+                                    <div class="col-md-12">
+                                        <a href="{{ route('redirect') }}"
+                                            class="btn btn-danger d-flex align-items-center justify-content-center">
+                                            <i class="bi bi-google"></i>
+                                            Login dengan Google
+                                        </a>
+                                    </div>
+                                </div>
+
                                 <p class="text-inverse text-left m-b-0">Belum punya akun? <a
                                         href="{{ route('register') }}">Register Sekarang.</a></p>
 
@@ -108,4 +126,15 @@
     <script type="text/javascript" src="{{ asset('assets/js/modernizr/modernizr.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/modernizr/css-scrollbars.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/common-pages.js') }}"></script>
+
+    <script type="text/javascript">
+        function showPassword() {
+            var x = document.getElementById("password");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        }
+    </script>
 @endsection

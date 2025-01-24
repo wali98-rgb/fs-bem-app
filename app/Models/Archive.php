@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Archive extends Model
 {
     use HasFactory;
-    protected $table = 'archive';
-    protected $primaryKey = 'id_archive';
-    protected $fillable = ['nama_file', 'file_archive'];
+    protected $table = 'archives';
+    protected $fillable = ['title', 'file'];
 }

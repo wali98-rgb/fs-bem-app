@@ -48,6 +48,13 @@
                                 placeholder="Contoh: Kominfo" autofocus>
                         </div>
                     </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Kode Departemen Kabinet</label>
+                        <div class="col-sm-10">
+                            <input type="text" value="{{ old('kode_dpt') }}" name="kode_dpt" class="form-control"
+                                placeholder="Contoh: DkSP04" autofocus>
+                        </div>
+                    </div>
                     <div class="d-flex justify-content-end">
                         <button name="save" class="btn btn-success btn-round mr-2" type="submit">Simpan</button>
                         <button type="reset" class="btn btn-warning btn-round">Reset</button>

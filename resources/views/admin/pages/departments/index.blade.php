@@ -51,7 +51,8 @@
                         <thead>
                             <tr>
                                 <th style="text-align: center">#</th>
-                                <th>Departemen Kabinet</th>
+                                <th width="30%">Departemen Kabinet</th>
+                                <th width="10%">Kode Departemen</th>
                                 <th style="text-align: center">Tindakan</th>
                             </tr>
                         </thead>
@@ -60,6 +61,7 @@
                                 <tr>
                                     <th style="text-align: center" scope="row">{{ $key + 1 }}</th>
                                     <td>{{ ucwords($item->name_dpt) }}</td>
+                                    <td>{{ $item->kode_dpt }}</td>
                                     <td align="center">
                                         <a href="{{ route('department.edit', $item->id) }}"
                                             class="btn btn-warning btn-round">Edit</a>

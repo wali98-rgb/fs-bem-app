@@ -9,7 +9,7 @@
                     <i class="bi bi-activity bg-c-blue"></i>
                     <div class="d-inline">
                         <h4>Program Kerja Departemen</h4>
-                        <span>Program Kerja yang dilakukan oleh setiap departemen kabinet periode 2023/2024.</span>
+                        <span>Program Kerja yang dilakukan oleh setiap departemen kabinet periode 2024/2025.</span>
                     </div>
                 </div>
             </div>
@@ -47,7 +47,7 @@
                             <select name="dept_id" class="form-control">
                                 <option disabled value="" selected>-- Pilih Departemen --</option>
                                 @forelse ($depts as $item)
-                                    <option value="{{ $item->id }}">Kabinet {{ $item->name_dpt }}
+                                    <option value="{{ $item->id }}">Departemen {{ $item->name_dpt }}
                                     </option>
                                 @empty
                                     <option value="" disabled>Tambahkan Departemen terlebih dahulu.</option>

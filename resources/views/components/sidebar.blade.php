@@ -82,10 +82,10 @@
                     <span class="pcoded-mtext" data-i18n="nav.form-components.main">Pengguna</span>
                 </a>
             </li>
-            <li class="{{ request()->is('!4dm1n/documentation') ? 'active' : '' }}">
-                <a href="{{ url('!4dm1n/documentation') }}">
+            <li class="{{ request()->is('!4dm1n/content') ? 'active' : '' }}">
+                <a href="{{ url('!4dm1n/content') }}">
                     <span class="pcoded-micon"><i class="ti-video-clapper"></i></span>
-                    <span class="pcoded-mtext" data-i18n="nav.form-components.main">Konten</span>
+                    <span class="pcoded-mtext" data-i18n="nav.form-components.main">Konten &#10004;</span>
                 </a>
             </li>
             <li class="{{ request()->is('!4dm1n/proker') ? 'active' : '' }}">

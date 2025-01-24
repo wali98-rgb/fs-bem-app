@@ -47,11 +47,13 @@ class DepartmentController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name_dpt' => 'required'
+            'name_dpt' => 'required',
+            'kode_dpt' => 'required'
         ]);
 
         Department::create([
-            'name_dpt' => $request->name_dpt
+            'name_dpt' => $request->name_dpt,
+            'kode_dpt' => $request->kode_dpt
         ]);
 
         Alert::toast('Departemen Kabinet berhasil dibuat.', 'success');
@@ -81,13 +83,15 @@ class DepartmentController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'name_dpt' => 'required'
+            'name_dpt' => 'required',
+            'kode_dpt' => 'required'
         ]);
 
         $dept = Department::findOrFail($id);
 
         $dept->update([
-            'name_dpt' => $request->name_dpt
+            'name_dpt' => $request->name_dpt,
+            'kode_dpt' => $request->kode_dpt
         ]);
 
         Alert::toast('Departemen Kabinet berhasil diubah.', 'success');
