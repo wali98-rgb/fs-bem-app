@@ -14,6 +14,7 @@ use App\Http\Controllers\ArchiveController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ContentController;
+use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\ForPassController;
 use App\Http\Controllers\SocialiteController;
 use Illuminate\Support\Facades\Route;
@@ -21,6 +22,7 @@ use App\Http\Controllers\UserController;
 use App\Models\User;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Auth;
+
 
 Route::get('/', [ClientController::class, 'home'])->name('dashboard');
 Route::get('/about', function () {
@@ -45,6 +47,7 @@ Route::prefix('!4dm1n')->middleware('auth')->group(function () {
     Route::resource('user', UserController::class);
     Route::resource('archive', ArchiveController::class);
     Route::resource('content', ContentController::class);
+    Route::resource('certificate', CertificateController::class);
 
     // Jika di UserController tidak bisa memakai route user/{lain-lain} selain dari route resource controller lagi
     Route::get('/user_access', [UserController::class, 'showAccess'])->name('user.access');
@@ -66,6 +69,20 @@ Route::prefix('!4dm1n')->middleware('auth')->group(function () {
     Route::get('/archives/{archive}/edit', [ArchiveController::class, 'edit'])->name('archive.edit');
     // Mengupdate data arsip
     Route::put('/archives/{archive}', [ArchiveController::class, 'update'])->name('archive.update');
+
+    // Route untuk halaman index sertifikat
+    Route::get('/certificates', [CertificateController::class, 'index'])->name('certificate.index');
+    // Route untuk form tambah sertifikat manual
+    Route::get('/certificates/create', [CertificateController::class, 'store'])->name('certificate.store');
+    // Route untuk menyimpan sertifikat manual
+    Route::post('/certificates', [CertificateController::class, 'createFromTemplate'])->name('certificate.upload');
+    // Route untuk hapus sertifikat
+    Route::delete('/certificates/{certificate}', [CertificateController::class, 'destroy'])->name('certificate.destroy');
+    // Route untuk mengunggah template sertifikat
+    Route::post('/certificates/template', [CertificateController::class, 'upload'])->name('certificate.template.store');
+    // Route untuk generate sertifikat masal
+    Route::post('/certificates/generate-bulk', [CertificateController::class, 'generateBulkCertificates'])->name('certificate.generate.bulk');
+
 });
 
 // Route Auth

@@ -53,3 +53,4 @@ php artisan make:migration create_files_table
 buat view resource/views/admin/pages/files
 buat route di routes/web.php -> ceria
 
+composer require maatwebsite/excel

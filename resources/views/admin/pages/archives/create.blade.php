@@ -20,7 +20,7 @@
                                 <i class="bi bi-columns-gap"></i>
                             </a>
                         </li>
-                        <li class="breadcrumb-item"><a href="{{ route('archives.index') }}">Arsip</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('archive.index') }}">Arsip</a></li>
                         <li class="breadcrumb-item"><a href="#">Tambah Arsip</a></li>
                     </ul>
                 </div>
@@ -33,13 +33,13 @@
             <div class="card-header">
                 <h5>Form Tambah Arsip</h5>
                 <div class="card-header-right">
-                    <a href="{{ route('archives.index') }}" class="btn btn-secondary btn-round">
+                    <a href="{{ route('archive.index') }}" class="btn btn-secondary btn-round">
                         <i class="bi bi-arrow-left"></i> Kembali
                     </a>
                 </div>
             </div>
             <div class="card-block">
-                <form action="{{ route('archives.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('archive.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <label for="title">Judul Arsip</label>

@@ -39,7 +39,7 @@
                 </div>
             </div>
             <div class="card-block">
-                <form action="{{ route('archives.update', $archive->id) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('archive.update', $archive->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 
