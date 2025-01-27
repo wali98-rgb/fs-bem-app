@@ -73,7 +73,8 @@ Route::prefix('!4dm1n')->middleware('auth')->group(function () {
     // Route untuk halaman index sertifikat
     Route::get('/certificates', [CertificateController::class, 'index'])->name('certificate.index');
     // Route untuk form tambah sertifikat manual
-    Route::get('/certificates/create', [CertificateController::class, 'store'])->name('certificate.store');
+    Route::get('/certificates/create', [CertificateController::class, 'create'])->name('certificate.create');
+    Route::post('/certificates/create', [CertificateController::class, 'store'])->name('certificate.store');
     // Route untuk menyimpan sertifikat manual
     Route::post('/certificates', [CertificateController::class, 'createFromTemplate'])->name('certificate.upload');
     // Route untuk hapus sertifikat

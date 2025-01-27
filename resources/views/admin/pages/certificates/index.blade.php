@@ -10,7 +10,7 @@
                     <i class="ti-plus"></i> Tambah
                 </button>
                 <div class="dropdown-menu dropdown-menu-right">
-                    <a href="{{ route('certificate.store') }}" class="dropdown-item">
+                    <a href="{{ route('certificate.create') }}" class="dropdown-item">
                         <i class="ti-id-badge"></i> Sertifikat Manual
                     </a>
                     <a href="{{ route('certificate.upload') }}" class="dropdown-item" data-toggle="modal" data-target="#uploadTemplateModal">
