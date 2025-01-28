@@ -58,6 +58,9 @@ class NewsController extends Controller
         ]);
 
         if ($request->hasFile('file_berita')) {
+            if ($request->file_berita && file_exists(public_path($request->file_berita))) {
+                unlink(public_path($request->file_berita));
+            }
             $file = $request->file('file_berita');
             $fileName = time() . '_' . $file->getClientOriginalName();
             $file->move(public_path('files/news'), $fileName);
