@@ -48,25 +48,23 @@
                                             {{ $archive->title }}
                                         </h6>
                                         <iframe src="{{ asset($archive->file) }}" width="100%" height="200" frameborder="0" allowfullscreen></iframe>
-                                            <a href="javascript:void(0)" onclick="showFile('{{ asset($archive->file) }}')" class="btn btn-sm btn-info mt-2">
-                                                <i class="bi bi-arrows-fullscreen"></i>Lihat
+                                            <a href="javascript:void(0)" onclick="showFile('{{ asset($archive->file) }}')" class="btn btn-sm btn-info">
+                                                <i class="icofont icofont-eye"></i>
                                             </a>
-                                        <div class="mt-2">
                                             <a href="{{ asset($archive->file) }}" class="btn btn-sm btn-success" download>
-                                                <i class="bi bi-download"></i> Unduh
+                                                <i class="bi bi-download"></i>
                                             </a>
                                             <a href="{{ route('archive.edit', $archive->id) }}" class="btn btn-sm btn-warning">
-                                                <i class="bi bi-pencil"></i> Edit
+                                                <i class="bi bi-pencil"></i>
                                             </a>
                                             <form action="{{ route('archive.destroy', $archive->id) }}" method="POST"
                                                 class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus arsip ini?')">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-sm btn-danger">
-                                                    <i class="bi bi-trash"></i> Hapus
+                                                    <i class="bi bi-trash"></i>
                                                 </button>
                                             </form>
-                                        </div>
                                     </div>
                                 </div>
                             </div>

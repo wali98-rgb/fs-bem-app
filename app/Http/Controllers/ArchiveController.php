@@ -49,7 +49,7 @@ class ArchiveController extends Controller
         $archive->save();
 
         // Redirect dengan pesan sukses
-        return redirect()->route('archives.index')
+        return redirect()->route('archive.index')
             ->with('success', 'Arsip Berhasil Ditambahkan');
     }
     // Menampilkan form edit
