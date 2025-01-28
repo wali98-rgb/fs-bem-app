@@ -22,6 +22,15 @@
             </div>
             <a href="about.html" class="nav-item nav-link">About</a>
             <a href="contact.html" class="nav-item nav-link">Contact</a>
+            <a class="dropdown-item" href="{{ route('logout') }}"
+                onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                <i class="ti-layout-sidebar-left"></i> Logout
+            </a>
+
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                @csrf
+            </form>
         </div>
     </div>
 </nav>

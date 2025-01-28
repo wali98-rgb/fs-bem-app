@@ -235,7 +235,12 @@ class AuthController extends Controller
         $codeDivision = $request->code_division;
         $dept = Department::where('kode_dpt', $codeDivision)->first();
 
-        $dept_id = $dept->id;
+        if ($dept === null) {
+            Alert::alert('Invalid', 'Kode divisi tidak valid.', 'error');
+            return redirect()->back()->withInput();
+        } else {
+            $dept_id = $dept->id;
+        }
 
         // PiSP24 : kode untuk posisi inti
         // DkSP01 : kode untuk departemen pendidikan
