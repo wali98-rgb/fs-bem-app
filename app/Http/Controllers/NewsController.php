@@ -21,16 +21,16 @@ class NewsController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'file_berita' => 'required|max:2048',
-            'nama' => 'required',
-            'deskripsi' => 'required',
-            'tanggal' => 'required'
+            'file_berita' => 'required|file|mimes:pdf,doc,docx,xls,csv,xlsx,jpg,jpeg,png,MOC,txt',
+            'nama' => 'required|string|max:255',
+            'deskripsi' => 'required|string',
+            'tanggal' => 'required|date'
         ]);
 
         if ($request->hasFile('file_berita')) {
             $file = $request->file('file_berita');
             $fileName = time() . '_' . $file->getClientOriginalName();
-            $file->storeAs(public_path('berita_acara'), $fileName);
+            $file->move(public_path('files/news'), $fileName);
         }
 
         News::create([
@@ -51,14 +51,25 @@ class NewsController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'file_berita' => 'required|max:2048',
-            'nama' => 'required',
-            'deskripsi' => 'required',
-            'tanggal' => 'required'
+            'file_berita' => 'required|file|mimes:pdf,doc,docx,xls,csv,xlsx,jpg,jpeg,png,MOC,txt',
+            'nama' => 'required|string|max:255',
+            'deskripsi' => 'required|string',
+            'tanggal' => 'required|date'
         ]);
 
+        if ($request->hasFile('file_berita')) {
+            $file = $request->file('file_berita');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('files/news'), $fileName);
+        }
+
         $news = News::findOrFail($id);
-        $news->update([$request->all()]);
+        $news->update([
+            'file_berita' => $fileName,
+            'nama' => $request->nama,
+            'tanggal' => $request->tanggal,
+            'deskripsi' => $request->deskripsi
+        ]);
 
         return redirect()->route('news.index')->with('message', "Berita Acara sudah diupdate.");
     }
@@ -66,7 +77,7 @@ class NewsController extends Controller
     public function delete($id)
     {
         $news = News::findOrFail($id);
-        Storage::delete('berita_acara/' . $news->file_berita);
+        Storage::delete('files/news/' . $news->file_berita);
         $news->delete();
         return redirect()->route('news.index')->with("message", "Berita Acara berhasil dihapus.");
     }
