@@ -11,6 +11,7 @@ use App\Http\Controllers\DocumentationController;
 use App\Http\Controllers\ProdiController;
 use App\Http\Controllers\ProkerController;
 use App\Http\Controllers\ArchiveController;
+use App\Http\Controllers\NewsController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ContentController;
@@ -58,6 +59,16 @@ Route::prefix('!4dm1n')->middleware(['auth', 'user-access:superadmin,admin'])->g
     // Route documentations page
     Route::delete('/docum/{docum}/image/{imageIndex}', [DocumentationController::class, 'deleteImage'])->name('docum.deleteImage');
     Route::get('/docum/{docum}/image/{imageIndex}', [DocumentationController::class, 'showImage'])->name('docum.showImage');
+
+    // Route for News or Berita Acara
+    Route::controller(NewsController::class)->group(function () {
+        Route::get('/news', 'index')->name('news.index');
+        Route::delete('/news/delete/{id}', "delete")->name("news.delete");
+        Route::get('/news/edit/{id}', 'edit')->name('news.edit');
+        Route::get('/news/create', 'create')->name('news.create');
+        Route::post('/news/create/store', 'store')->name('news.store');
+        Route::put('/news/edit/{id}/store', 'update')->name('news.update');
+    });
     // Route untuk daftar konten
     Route::get('/contents', [ContentController::class, 'index'])->name('content.index');
     // Route untuk form tambah konten
