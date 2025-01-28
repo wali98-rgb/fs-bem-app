@@ -44,38 +44,63 @@
     <div class="card-block">
       <div class="container">
         <div class="row">
-          @forelse ($news as $n)
-          <div class="col-md-4">
-            <div class="card">
-              <div class="card-body text-center">
-                <h6 class="card-title text-truncate mb-2 text-bold" title="{{ $n->title }}">
-                  {{ $n->title }}
-                </h6>
-                <iframe src="{{ asset('files/news/' . $n->file_berita) }}" width="100%" height="200" frameborder="0" allowfullscreen></iframe>
-                <a href="javascript:void(0)" onclick="showFile('{{ asset(`files/news/` . $n->file_berita) }}')" class="btn btn-sm btn-info mt-2">
-                  <i class="bi bi-arrows-fullscreen"></i>Lihat
-                </a>
-                <div class="mt-2">
-                  <a href="{{ asset('files/news/' . $n->file_berita) }}" class="btn btn-sm btn-success" download>
-                    <i class="bi bi-download"></i> Unduh
-                  </a>
-                  <a href="{{ route('news.edit', $n->id) }}" class="btn btn-sm btn-warning">
-                    <i class="bi bi-pencil"></i> Edit
-                  </a>
+          <table class="table">
+            <thead>
+              <tr>
+                <th style="text-align: center">#</th>
+                <th>Tanggal Dilaksanakan</th>
+                <th>Status</th>
+                <th>Nama Acara</th>
+                <th>Deskripsi</th>
+                <th style="text-align: center">Aksi</th>
+              </tr>
+            </thead>
+            <tbody>
+              @forelse ($news as $n)
+              @php
+              $fileURL = 'files/news/' . $n->file_berita;
+              @endphp
+              <tr>
+                <th style="text-align: center" scope="row">{{ $loop->iteration }}</th>
+                <td>{{ $n->tanggal }}</td>
+                <td>
+                  @switch($n->status)
+                  @case('open')
+                  <span></span>
+                  @break
+                  @case('pending')
+                  <span></span>
+                  @break
+                  @case('done')
+                  <span></span>
+                  @break
+                  @default
+                  <span></span>
+                  @endswitch
+                </td>
+                <td>{{ $n->nama }}</td>
+                <td>{{ $n->deskripsi }}</td>
+                <td align="center">
+                  <a href="javascript:void(0)" onclick="showFile('{{ asset($fileURL) }}')">Lihat</a>
+                  <a href="{{ asset($fileURL) }}" class="btn btn-warning btn-round" download>Download</a>
+                  <a href="{{ route('news.edit', $n->id) }}" class="btn btn-warning btn-round">Edit</a>
                   <form action="{{ route('news.delete', $n->id) }}" method="POST"
-                    class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus arsip ini?')">
+                    class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus Berita Acara ini?')">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-sm btn-danger">
-                      <i class="bi bi-trash"></i> Hapus
+                      Hapus
                     </button>
                   </form>
-                </div>
-              </div>
-            </div>
-          </div>
-          @empty
-          @endforelse
+                </td>
+              </tr>
+              @empty
+              <tr>
+                <td colspan="7" style="text-align: center"><i>Data Berita Acara tidak tersedia.</i></td>
+              </tr>
+              @endforelse
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
@@ -89,10 +114,14 @@
   function showFile(url) {
     Swal.fire({
       html: `
-                <div style="position: relative; padding-top: 56.25%; overflow: hidden;">
-                    <iframe src="${url}" frameborder="0" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
-                </div>
-            `,
+        <div style="position: relative; padding-top: 56.25%; overflow: hidden;">
+          <object data="${url}" type="application/pdf" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+            <embed src="${url}" type="application/pdf" />
+            <!-- Fallback jika browser tidak mendukung -->
+            <p>Browser Anda tidak mendukung menampilkan PDF.</p>
+          </object>
+        </div>
+      `,
       width: '90%',
       showCloseButton: true,
       showConfirmButton: false,

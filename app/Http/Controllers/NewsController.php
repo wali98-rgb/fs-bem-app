@@ -51,7 +51,7 @@ class NewsController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'file_berita' => 'required|file|mimes:pdf,doc,docx,xls,csv,xlsx,jpg,jpeg,png,MOC,txt',
+            'file_berita' => 'nullable|file|mimes:pdf,doc,docx,xls,csv,xlsx,jpg,jpeg,png,MOC,txt',
             'nama' => 'required|string|max:255',
             'deskripsi' => 'required|string',
             'tanggal' => 'required|date'
@@ -80,7 +80,7 @@ class NewsController extends Controller
     public function delete($id)
     {
         $news = News::findOrFail($id);
-        Storage::delete('files/news/' . $news->file_berita);
+        unlink(public_path('files/news/' . $news->file_berita));
         $news->delete();
         return redirect()->route('news.index')->with("message", "Berita Acara berhasil dihapus.");
     }
