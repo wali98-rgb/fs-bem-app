@@ -30,7 +30,7 @@
             <li class="{{ request()->is('!4dm1n/archive') ? 'active' : '' }}">
                 <a href="{{ url('!4dm1n/archive') }}">
                     <span class="pcoded-micon"><i class="ti-archive"></i></span>
-                    <span class="pcoded-mtext" data-i18n="nav.form-components.main">Arsip</span>
+                    <span class="pcoded-mtext" data-i18n="nav.form-components.main">Arsip &#10004;</span>
                 </a>
             </li>
             <li class="{{ request()->is('!4dm1n/docum') ? 'active' : '' }}">
@@ -64,10 +64,10 @@
                     <span class="pcoded-mtext" data-i18n="nav.form-components.main">Berkas & Persuratan</span>
                 </a>
             </li>
-            <li class="{{ request()->is('!4dm1n/documentation') ? 'active' : '' }}">
-                <a href="{{ url('!4dm1n/documentation') }}">
-                    <span class="pcoded-micon"><i class="ti-comment"></i></i></span>
-                    <span class="pcoded-mtext" data-i18n="nav.form-components.main">Ask Me Anything</span>
+            <li class="{{ request()->is('!4dm1n/certificate') ? 'active' : '' }}">
+                <a href="{{ url('!4dm1n/certificate') }}">
+                    <span class="pcoded-micon"><i class="ti-medall"></i></span>
+                    <span class="pcoded-mtext" data-i18n="nav.form-components.main">Sertifikat</span>
                 </a>
             </li>
             <li class="{{ request()->is('!4dm1n/documentation') ? 'active' : '' }}">

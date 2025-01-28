@@ -3,7 +3,7 @@
     <h6 class="section-title bg-white text-center text-primary px-3">Konten</h6>
     <h1 class="mb-5">Kegiatan BEM IM</h1>
 </div>
-<div class="row g-4">
+<div class="row justify-content-center row-cols-1 row-cols-md-2 row-cols-lg-3">
     @foreach ($contents as $content)
         <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
             <div class="team-item bg-light">
