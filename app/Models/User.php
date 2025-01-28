@@ -45,6 +45,11 @@ class User extends Authenticatable
         return $this->belongsTo(Prodi::class, 'prodi_id');
     }
 
+    public function setStatusAccessAttribute($value)
+    {
+        $this->attributes['access_user'] = in_array($value, [0, 1]) ? $value : 0;
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

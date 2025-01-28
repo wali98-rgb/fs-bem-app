@@ -32,13 +32,13 @@ Route::get('/feedback', function () {
 })->name('feedback');
 
 // Route Admin Session
-Route::prefix('!4dm1n')->middleware(['auth', 'user-access:superadmin,admin'])->group(function () {
+Route::prefix('!4dm1n')->middleware(['auth', 'user-permission'])->group(function () {
     // Route Layouts
     Route::get('/', function () {
         return view('admin.pages.home');
     })->name('home');
 
-    Route::resource('major', ProdiController::class);
+    Route::resource('major', ProdiController::class)->middleware('user-access:superadmin');
     Route::resource('attendence', AttendenceController::class);
     Route::resource('proker', ProkerController::class);
     Route::resource('docum', DocumentationController::class);
@@ -48,9 +48,10 @@ Route::prefix('!4dm1n')->middleware(['auth', 'user-access:superadmin,admin'])->g
 
     // Jika di UserController tidak bisa memakai route user/{lain-lain} selain dari route resource controller lagi
     Route::get('/user_access', [UserController::class, 'showAccess'])->name('user.access');
-    Route::put('/user_access/{id}', [UserController::class, 'addAccess'])->name('user.addAccess');
+    Route::put('/user_access', [UserController::class, 'addAccess'])->name('user.addAccess');
+    Route::put('/user_access/{id}', [UserController::class, 'editAccess'])->name('user.editAccess');
 
-    Route::resource('department', DepartmentController::class);
+    Route::resource('department', DepartmentController::class)->middleware('user-access:superadmin');
 
     // Route documentations page
     Route::delete('/docum/{docum}/image/{imageIndex}', [DocumentationController::class, 'deleteImage'])->name('docum.deleteImage');
@@ -74,10 +75,6 @@ Route::middleware('not-quilify')->group(function () {
     Route::get('login', [AuthController::class, 'showLoginForm'])->name('login');
     Route::post('login', [AuthController::class, 'login']);
 
-    // Login dengan Google
-    Route::get('redirect', [SocialiteController::class, 'redirect'])->name('redirect');
-    Route::get('callback', [SocialiteController::class, 'callback'])->name('callback');
-
     // Register Routes
     Route::get('register', [AuthController::class, 'showRegistrationForm'])->name('register');
     Route::post('register', [AuthController::class, 'register'])->name('register.action');
@@ -87,18 +84,22 @@ Route::middleware('not-quilify')->group(function () {
     Route::post('forgot/password', [ForPassController::class, 'submitForgotPasswordForm'])->name('forgot.password.post');
     Route::get('reset/password/{token}', [ForPassController::class, 'showResetPasswordForm'])->name('reset.password.get');
     Route::post('reset/password/{token}', [ForPassController::class, 'submitResetPasswordForm'])->name('reset.password.post');
-
-    // Email Verification Routes
-    Route::get('/email/verify', [AuthController::class, 'verifyNotice'])->middleware('auth')->name('verification.notice');
-    Route::get('/email/verify-resend', [AuthController::class, 'verifyResend'])->middleware('auth')->name('verification.resend.link');
-    Route::get('/email/verify-resend-mail', [AuthController::class, 'verifyResendMail'])->middleware('auth')->name('verification.resend.mail');
-    Route::get('/verify-mail/{token}', [AuthController::class, 'verifyEmail'])->name('verification.verify');
-    Route::post('/email/verification-notification', [AuthController::class, 'verifyHandler'])->name('verification.send');
-
-    // Code Division Routes
-    Route::get('/verify-code/{token}', [AuthController::class, 'showCodeDivision'])->middleware('auth')->name('verification.code.get');
-    Route::post('/verify-code/{token}', [AuthController::class, 'submitCodeDivision'])->middleware('auth')->name('verification.code.post');
 });
+
+// Email Verification Routes
+Route::get('/email/verify', [AuthController::class, 'verifyNotice'])->middleware('auth')->name('verification.notice');
+Route::get('/email/verify-resend', [AuthController::class, 'verifyResend'])->middleware('auth')->name('verification.resend.link');
+Route::get('/email/verify-resend-mail', [AuthController::class, 'verifyResendMail'])->middleware('auth')->name('verification.resend.mail');
+Route::get('/verify-mail/{token}', [AuthController::class, 'verifyEmail'])->name('verification.verify');
+Route::post('/email/verification-notification', [AuthController::class, 'verifyHandler'])->name('verification.send');
+
+// Code Division Routes
+Route::get('/verify-code/{token}', [AuthController::class, 'showCodeDivision'])->middleware('auth')->name('verification.code.get');
+Route::post('/verify-code/{token}', [AuthController::class, 'submitCodeDivision'])->middleware('auth')->name('verification.code.post');
+
+// Route Login dengan Google
+Route::get('redirect', [SocialiteController::class, 'redirect'])->name('redirect');
+Route::get('callback', [SocialiteController::class, 'callback'])->name('callback');
 
 // Route Logout
 Route::post('logout', [LoginController::class, 'logout'])->middleware('auth')->name('logout');
