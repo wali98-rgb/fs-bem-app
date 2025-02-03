@@ -14,6 +14,7 @@ use App\Http\Controllers\ArchiveController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ContentController;
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\ForPassController;
 use App\Http\Controllers\SocialiteController;
 use Illuminate\Support\Facades\Route;
@@ -45,6 +46,7 @@ Route::prefix('!4dm1n')->middleware(['auth', 'user-access:superadmin,admin'])->g
     Route::resource('user', UserController::class);
     Route::resource('archive', ArchiveController::class);
     Route::resource('content', ContentController::class);
+    Route::resource('file', FileController::class);
 
     // Jika di UserController tidak bisa memakai route user/{lain-lain} selain dari route resource controller lagi
     Route::get('/user_access', [UserController::class, 'showAccess'])->name('user.access');
@@ -66,6 +68,15 @@ Route::prefix('!4dm1n')->middleware(['auth', 'user-access:superadmin,admin'])->g
     Route::get('/archives/{archive}/edit', [ArchiveController::class, 'edit'])->name('archive.edit');
     // Mengupdate data arsip
     Route::put('/archives/{archive}', [ArchiveController::class, 'update'])->name('archive.update');
+
+    // Route untuk file
+    Route::get('/file', [FileController::class, 'showProker'])->name('files.showProker');
+    Route::get('/proker/{proker}/files', [FileController::class, 'index'])->name('files.index');
+    Route::get('/proker/{proker}/files/create', [FileController::class, 'create'])->name('files.create');
+    Route::post('/proker/{proker}/files', [FileController::class, 'store'])->name('files.store');
+    Route::get('/proker/{proker}/files/{file}/edit', [FileController::class, 'edit'])->name('files.edit');
+    Route::put('/proker/{proker}/files/{file}', [FileController::class, 'update'])->name('files.update');
+    Route::delete('/proker/{proker}/files/{file}', [FileController::class, 'destroy'])->name('files.destroy');
 });
 
 // Route Auth

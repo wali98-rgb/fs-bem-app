@@ -59,7 +59,7 @@
                 </a>
             </li>
             <li class="{{ request()->is('!4dm1n/documentation') ? 'active' : '' }}">
-                <a href="{{ url('!4dm1n/documentation') }}">
+                <a href="{{ url('!4dm1n/file') }}">
                     <span class="pcoded-micon"><i class="ti-folder"></i></span>
                     <span class="pcoded-mtext" data-i18n="nav.form-components.main">Berkas & Persuratan</span>
                 </a>
