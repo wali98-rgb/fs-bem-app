@@ -45,29 +45,32 @@
       <div class="container">
         <div class="row">
           @forelse ($news as $n)
+          @php
+          $fileURL = "files/news/" . $n->file_berita
+          @endphp
           <div class="col-md-4">
             <div class="card">
               <div class="card-body text-center">
-                <h6 class="card-title text-truncate mb-2 text-bold" title="{{ $n->title }}">
-                  {{ $n->title }}
+                <h6 class="card-title text-truncate mb-2 text-bold" title="{{ $n->nama }}">
+                  {{ $n->nama }}
                 </h6>
-                <iframe src="{{ asset('files/news/' . $n->file_berita) }}" width="100%" height="200" frameborder="0" allowfullscreen></iframe>
-                <a href="javascript:void(0)" onclick="showFile('{{ asset(`files/news/` . $n->file_berita) }}')" class="btn btn-sm btn-info mt-2">
-                  <i class="bi bi-arrows-fullscreen"></i>Lihat
+                <iframe src="{{ asset($fileURL) }}" width="100%" height="200" frameborder="0" allowfullscreen></iframe>
+                <a href="javascript:void(0)" onclick="showFile('{{ asset($fileURL) }}')" class="btn btn-sm btn-info mt-2">
+                  Lihat
                 </a>
                 <div class="mt-2">
-                  <a href="{{ asset('files/news/' . $n->file_berita) }}" class="btn btn-sm btn-success" download>
-                    <i class="bi bi-download"></i> Unduh
+                  <a href="{{ asset($fileURL) }}" class="btn btn-sm btn-success" download>
+                    Unduh
                   </a>
                   <a href="{{ route('news.edit', $n->id) }}" class="btn btn-sm btn-warning">
-                    <i class="bi bi-pencil"></i> Edit
+                    Edit
                   </a>
                   <form action="{{ route('news.delete', $n->id) }}" method="POST"
-                    class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus arsip ini?')">
+                    class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus Berita Acara ini?')">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-sm btn-danger">
-                      <i class="bi bi-trash"></i> Hapus
+                      Hapus
                     </button>
                   </form>
                 </div>
@@ -89,10 +92,10 @@
   function showFile(url) {
     Swal.fire({
       html: `
-                <div style="position: relative; padding-top: 56.25%; overflow: hidden;">
-                    <iframe src="${url}" frameborder="0" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
-                </div>
-            `,
+        <div style="position: relative; padding-top: 56.25%; overflow: hidden;">
+          <iframe src="${url}" frameborder="0" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
+        </div>
+      `,
       width: '90%',
       showCloseButton: true,
       showConfirmButton: false,
