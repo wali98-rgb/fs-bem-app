@@ -39,23 +39,18 @@
                     </a>
                     <ul class="show-notification profile-notification">
                         <li>
+                            <a href="{{ url('/') }}">
+                                <i class="ti-desktop"></i> Go to Client
+                            </a>
+                        </li>
+                        <li>
                             <a href="#!">
                                 <i class="ti-settings"></i> Settings
                             </a>
                         </li>
                         <li>
                             <a href="#">
-                                <i class="ti-user"></i> Profile
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
                                 <i class="ti-email"></i> My Messages
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="ti-lock"></i> Lock Screen
                             </a>
                         </li>
                         <li>

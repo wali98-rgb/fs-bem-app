@@ -100,7 +100,7 @@
     color: var(--primary);
 }
 
-@media (max-width: 991.98px) {
+@media (max-width: 991px) {
     .navbar-light .navbar-nav .nav-link  {
         margin-right: 0;
         padding: 10px 0;
@@ -149,6 +149,7 @@
         opacity: 1;
     }
 }
+
 
 
 /*** Header carousel ***/
