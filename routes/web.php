@@ -15,6 +15,7 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ContentController;
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\ForPassController;
 use App\Http\Controllers\SocialiteController;
@@ -48,6 +49,7 @@ Route::prefix('!4dm1n')->middleware(['auth', 'user-permission'])->group(function
     Route::resource('user', UserController::class);
     Route::resource('archive', ArchiveController::class);
     Route::resource('content', ContentController::class);
+    Route::resource('file', FileController::class);
     Route::resource('certificate', CertificateController::class);
 
     // Jika di UserController tidak bisa memakai route user/{lain-lain} selain dari route resource controller lagi
@@ -82,6 +84,15 @@ Route::prefix('!4dm1n')->middleware(['auth', 'user-permission'])->group(function
     // Mengupdate data arsip
     Route::put('/archives/{archive}', [ArchiveController::class, 'update'])->name('archive.update');
 
+    // Route untuk file
+    Route::get('/file', [FileController::class, 'showProker'])->name('files.showProker');
+    Route::get('/proker/{proker}/files', [FileController::class, 'index'])->name('files.index');
+    Route::get('/proker/{proker}/files/create', [FileController::class, 'create'])->name('files.create');
+    Route::post('/proker/{proker}/files', [FileController::class, 'store'])->name('files.store');
+    Route::get('/proker/{proker}/files/{file}/edit', [FileController::class, 'edit'])->name('files.edit');
+    Route::put('/proker/{proker}/files/{file}', [FileController::class, 'update'])->name('files.update');
+    Route::delete('/proker/{proker}/files/{file}', [FileController::class, 'destroy'])->name('files.destroy');
+  
     // Route untuk halaman index sertifikat
     Route::get('/certificates', [CertificateController::class, 'index'])->name('certificate.index');
     // Route untuk form tambah sertifikat manual
@@ -95,7 +106,6 @@ Route::prefix('!4dm1n')->middleware(['auth', 'user-permission'])->group(function
     Route::post('/certificates/template', [CertificateController::class, 'upload'])->name('certificate.template.store');
     // Route untuk generate sertifikat masal
     Route::post('/certificates/generate-bulk', [CertificateController::class, 'generateBulkCertificates'])->name('certificate.generate.bulk');
-
 });
 
 // Route Auth
