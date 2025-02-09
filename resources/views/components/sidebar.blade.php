@@ -40,10 +40,10 @@
                 </a>
             </li>
 
-            <li class="{{ request()->is('!4dm1n/documentation') ? 'active' : '' }}">
-                <a href="{{ url('!4dm1n/documentation') }}">
+            <li class="{{ request()->is('!4dm1n/news') ? 'active' : '' }}">
+                <a href="{{ url('!4dm1n/news') }}">
                     <span class="pcoded-micon"><i class="bi bi-images"></i></span>
-                    <span class="pcoded-mtext" data-i18n="nav.form-components.main">Berita Acara</span>
+                    <span class="pcoded-mtext" data-i18n="nav.form-components.main">Berita Acara &#10004;</span>
                 </a>
             </li>
             <li class="{{ request()->is('!4dm1n/documentation') ? 'active' : '' }}">
@@ -67,7 +67,7 @@
             <li class="{{ request()->is('!4dm1n/certificate') ? 'active' : '' }}">
                 <a href="{{ url('!4dm1n/certificate') }}">
                     <span class="pcoded-micon"><i class="ti-medall"></i></span>
-                    <span class="pcoded-mtext" data-i18n="nav.form-components.main">Sertifikat</span>
+                    <span class="pcoded-mtext" data-i18n="nav.form-components.main">Sertifikat &#10004;</span>
                 </a>
             </li>
             <li class="{{ request()->is('!4dm1n/documentation') ? 'active' : '' }}">
@@ -79,7 +79,7 @@
             <li class="{{ request()->is('!4dm1n/user') || request()->is('!4dm1n/user_access') ? 'active' : '' }}">
                 <a href="{{ url('!4dm1n/user') }}">
                     <span class="pcoded-micon"><i class="bi bi-people"></i></span>
-                    <span class="pcoded-mtext" data-i18n="nav.form-components.main">Pengguna</span>
+                    <span class="pcoded-mtext" data-i18n="nav.form-components.main">Pengguna &#10004;</span>
                 </a>
             </li>
             <li class="{{ request()->is('!4dm1n/content') ? 'active' : '' }}">

@@ -19,6 +19,7 @@ use App\Http\Controllers\FileController;
 use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\ForPassController;
 use App\Http\Controllers\SocialiteController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Models\User;
@@ -27,13 +28,11 @@ use Illuminate\Support\Facades\Auth;
 
 
 Route::get('/', [ClientController::class, 'home'])->name('dashboard');
-Route::get('/about', function () {
-    return view('client.pages.about');
-})->name('about');
-
-Route::get('/feedback', function () {
-    return view('client.pages.feedback');
-})->name('feedback');
+Route::get('/client/pages/ukm', [ClientController::class, 'ukm'])->name('ukm');
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+});
 
 // Route Admin Session
 Route::prefix('!4dm1n')->middleware(['auth', 'user-permission'])->group(function () {

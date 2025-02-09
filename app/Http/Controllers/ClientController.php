@@ -13,4 +13,9 @@ class ClientController extends Controller
 
         return view('client.app', compact('contents'));
     }
+    public function ukm()
+    {
+        return view('client.pages.ukm');
+    }
+
 }

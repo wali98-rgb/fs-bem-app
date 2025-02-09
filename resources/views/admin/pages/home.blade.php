@@ -9,7 +9,7 @@
                     <div class="card-block-small">
                         <i class="icofont icofont-pie-chart bg-c-blue card1-icon"></i>
                         <span class="text-c-blue f-w-600">Total Pengguna</span>
-                        {{-- <h4>{{ $users->count() }}</h4> --}}
+                        <h4>{{ \App\Models\User::count() }}</h4>
                         <div>
                             <span class="f-left m-t-10 text-muted">
                                 <i class="text-c-blue f-16 icofont icofont-warning m-r-10"></i>Get
@@ -26,10 +26,11 @@
                     <div class="card-block-small">
                         <i class="icofont icofont-ui-home bg-c-pink card1-icon"></i>
                         <span class="text-c-pink f-w-600">Total Arsip</span>
-                        <h4></h4>
+                        <h4>{{ \App\Models\Archive::count() }}</h4>
                         <div>
                             <span class="f-left m-t-10 text-muted">
-                                <i class="text-c-pink f-16 icofont icofont-calendar m-r-10"></i>Last
+                                <i class="text-c-pink f-16 icofont icofont-calendar m-r-10"></i>
+                                Last
                                 24 hours
                             </span>
                         </div>
@@ -61,7 +62,7 @@
                     <div class="card-block-small">
                         <i class="icofont icofont-social-twitter bg-c-yellow card1-icon"></i>
                         <span class="text-c-yellow f-w-600">Proker Berjalan</span>
-                        <h4>+562</h4>
+                        <h4>{{ \App\Models\Proker::count() }}</h4>
                         <div>
                             <span class="f-left m-t-10 text-muted">
                                 <i class="text-c-yellow f-16 icofont icofont-refresh m-r-10"></i>Just
