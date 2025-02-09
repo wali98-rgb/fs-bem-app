@@ -39,7 +39,6 @@
 @include('client.components.navbar')
 
 <body>
-
   <div class="container-fluid p-0 mb-5">
     <div class="owl-carousel-item position-relative" style="height: auto; overflow: hidden;">
         <img class="img-fluid w-100 h-50" 

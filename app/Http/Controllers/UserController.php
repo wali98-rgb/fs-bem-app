@@ -285,4 +285,7 @@ class UserController extends Controller
         // Redirect to the intended route
         return redirect()->intended('login');
     }
+
+
+    
 }
