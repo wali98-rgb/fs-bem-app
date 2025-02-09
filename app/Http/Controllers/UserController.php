@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\VerificationMail;
 use App\Models\Department;
 use App\Models\Prodi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Illuminate\Support\Facades\Mail;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -18,20 +21,48 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
+        $depts = Department::all();
 
         if ($users->isEmpty()) {
+            $userisAccessBySuperadmin = User::all();
+            $userisAccess = User::all();
             $userBem = User::all();
+            $userBemAdmin = User::all();
             $userAdmin = User::all();
         } else {
             // $user = User::orderBy('name', 'asc')->paginate('10');
             // Memfilter pengguna dengan role 'bem' dan 'admin', kecuali 'superadmin'
             $userBem = User::withRoles(['bem'])
                 ->with('department', 'prodi')
+                ->join('departments', 'users.dept_id', '=', 'departments.id')
+                ->orderBy('departments.id', 'asc')
+                ->select('users.*')
+                ->paginate(10);
+
+            $userBemAdmin = User::withRoles(['bem'])
+                ->with('department', 'prodi')
+                ->where('dept_id', Auth::user()->dept_id)
                 ->orderBy('name', 'asc')
                 ->paginate(10);
 
             $userAdmin = User::withRoles(['admin'])
                 ->with('department', 'prodi')
+                ->orderBy('name', 'asc')
+                ->paginate(10);
+
+            $userisAccessBySuperadmin = User::withRoles(['bem'])
+                ->with('department', 'prodi')
+                ->join('departments', 'users.dept_id', '=', 'departments.id')
+                ->where('access_user', '1')
+                ->orderBy('departments.id', 'asc')
+                ->select('users.*')
+                ->paginate(10);
+
+            // Memfilter pengguna dengan role 'bem' dan status akses = 1
+            $userisAccess = User::withRoles(['bem'])
+                ->with('department', 'prodi')
+                ->where('dept_id', Auth::user()->dept_id)
+                ->where('access_user', '1')
                 ->orderBy('name', 'asc')
                 ->paginate(10);
         }
@@ -40,9 +71,7 @@ class UserController extends Controller
         $text = 'Anda yakin ingin menghapusnya?';
         confirmDelete($title, $text);
 
-        // $user_fk = User::with('department', 'prodi')->get();
-
-        return view('admin.pages.users.index', compact('userBem', 'userAdmin'));
+        return view('admin.pages.users.index', compact('userBem', 'userAdmin', 'userisAccessBySuperadmin', 'userisAccess', 'userBemAdmin', 'depts'));
     }
 
     public function showAccess()
@@ -57,26 +86,45 @@ class UserController extends Controller
             // Memfilter pengguna dengan role 'bem' dan 'admin', kecuali 'superadmin'
             $user = User::withRoles(['bem'])
                 ->with('department', 'prodi')
+                ->join('departments', 'users.dept_id', '=', 'departments.id')
+                ->where('access_user', '0')
+                ->orderBy('departments.id', 'asc')
+                ->select('users.*')
+                ->paginate(10);
+
+            $userBemAdmin = User::withRoles(['bem'])
+                ->with('department', 'prodi')
+                ->where('dept_id', Auth::user()->dept_id)
+                ->where('access_user', '0')
                 ->orderBy('name', 'asc')
                 ->paginate(10);
         }
 
-        return view('admin.pages.users.user_access', compact('user', 'depts'));
+        return view('admin.pages.users.user_access', compact('user', 'depts', 'userBemAdmin'));
     }
 
-    public function addAccess(Request $request, string $id)
+    public function addAccess(Request $request)
     {
         $request->validate([
-            'access_user' => 'required'
+            'access_user' => 'required|array',
+            'access_user.*' => 'exists:users,id'
         ]);
 
+        User::whereIn('id', $request->access_user)->update(['access_user' => '1']);
+
+        Alert::toast('Akses telah diberikan.', 'success');
+        return redirect()->back();
+    }
+
+    public function editAccess($id)
+    {
         $user = User::findOrFail($id);
 
         $user->update([
-            'access_user' => 1
+            'access_user' => '0'
         ]);
 
-        Alert::toast('Akses telah diberikan.', 'success');
+        Alert::alert('Berhasil', 'Akses pengguna telah dihapus.', 'success');
         return redirect()->back();
     }
 
@@ -96,16 +144,27 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'photo' => 'nullable|image|mimes:png,jpg,jpeg|max:5000000',
-            'name' => 'required|min:2',
-            'email' => 'required',
-            'password' => 'required',
-            'gender' => 'required',
-            'role' => 'required',
-            'dept_id' => 'required',
-            'prodi_id' => 'required'
-        ]);
+        if (Auth::user()->role === 'superadmin') {
+            $request->validate([
+                'photo' => 'nullable|image|mimes:png,jpg,jpeg|max:5000000',
+                'name' => 'required|min:2',
+                'email' => 'required|email',
+                'password' => 'required',
+                'gender' => 'required',
+                'role' => 'required',
+                'dept_id' => 'required',
+                'prodi_id' => 'required'
+            ]);
+        } else if (Auth::user()->role === 'admin') {
+            $request->validate([
+                'photo' => 'nullable|image|mimes:png,jpg,jpeg|max:5000000',
+                'name' => 'required|min:2',
+                'email' => 'required|email',
+                'password' => 'required',
+                'gender' => 'required',
+                'prodi_id' => 'required'
+            ]);
+        }
 
         // Inisialisasi variable untuk menyimpan nama file
         $image_name = null;
@@ -120,19 +179,53 @@ class UserController extends Controller
             $image_path = NULL;
         }
 
-        // Menyimpan gambar ke database
-        User::create([
-            'photo' => $image_path,
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request['password']),
-            'gender' => $request->gender,
-            'role' => $request->role,
-            'dept_id' => $request->dept_id,
-            'prodi_id' => $request->prodi_id
-        ]);
+        $email = $request->email;
+        $v_code = Str::random(32);
 
-        Alert::toast('Pengguna berhasil ditambahkan.', 'success');
+        $existingEmail = User::where('email', $email)->first();
+
+        if ($existingEmail) {
+            Alert::alert('Duplikasi', 'Email sudah terdaftar, gunakan email lain.', 'error');
+            return redirect()->back();
+        }
+
+        // Menyimpan gambar ke database
+        if (Auth::user()->role === 'superadmin') {
+            $user = User::create([
+                'photo' => $image_path,
+                'name' => $request->name,
+                'email' => $email,
+                'password' => Hash::make($request->password),
+                'gender' => $request->gender,
+                'verification_id' => $v_code,
+                'verification_status' => '0',
+                'role' => $request->role,
+                'dept_id' => $request->dept_id,
+                'prodi_id' => $request->prodi_id
+            ]);
+        } else if (Auth::user()->role === 'admin') {
+            $user = User::create([
+                'photo' => $image_path,
+                'name' => $request->name,
+                'email' => $email,
+                'password' => Hash::make($request->password),
+                'gender' => $request->gender,
+                'verification_id' => $v_code,
+                'verification_status' => '0',
+                'dept_id' => Auth::user()->dept_id,
+                'prodi_id' => $request->prodi_id
+            ]);
+        }
+
+        $baseUrl = config('app.url');
+        $verificationToken = $user->verification_id;
+        $encryptedToken = encrypt($verificationToken);
+
+        $verificationlink = $baseUrl . '/verify-code/' . $encryptedToken;
+
+        Mail::to($email)->send(new VerificationMail($verificationlink));
+
+        Alert::alert('Berhasil', 'Pengguna berhasil ditambahkan. Link verifikasi telah dikirim ke email yang didaftarkan.', 'success');
         return redirect()->route('user.index');
     }
 
@@ -161,15 +254,20 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $request->validate([
-            'photo' => 'nullable|image|mimes:png,jpg,jpeg|max:5000000',
-            'name' => 'required|min:2',
-            'email' => 'required',
-            'gender' => 'required',
-            'role' => 'required',
-            'dept_id' => 'required',
-            'prodi_id' => 'required'
-        ]);
+        if (Auth::user()->role === 'superadmin') {
+            $request->validate([
+                'photo' => 'nullable|image|mimes:png,jpg,jpeg|max:5000000',
+                'name' => 'required|min:2',
+                'email' => 'required|email',
+                'role' => 'required',
+                'dept_id' => 'required'
+            ]);
+        } else if (Auth::user()->role === 'admin') {
+            $request->validate([
+                'name' => 'required|min:2',
+                'email' => 'required|email'
+            ]);
+        }
 
         $user = User::findOrFail($id);
 
@@ -189,20 +287,23 @@ class UserController extends Controller
                 'photo' => $image_path,
                 'name' => $request->name,
                 'email' => $request->email,
-                'gender' => $request->gender,
                 'role' => $request->role,
-                'dept_id' => $request->dept_id,
-                'prodi_id' => $request->prodi_id
+                'dept_id' => $request->dept_id
             ]);
         } else {
-            $user->update([
-                'name' => $request->name,
-                'email' => $request->email,
-                'gender' => $request->gender,
-                'role' => $request->role,
-                'dept_id' => $request->dept_id,
-                'prodi_id' => $request->prodi_id
-            ]);
+            if (Auth::user()->role === 'superadmin') {
+                $user->update([
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'role' => $request->role,
+                    'dept_id' => $request->dept_id
+                ]);
+            } else if (Auth::user()->role === 'admin') {
+                $user->update([
+                    'name' => $request->name,
+                    'email' => $request->email
+                ]);
+            }
         }
 
         Alert::toast('Data pengguna berhasil diperbarui.', 'success');

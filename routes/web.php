@@ -11,10 +11,12 @@ use App\Http\Controllers\DocumentationController;
 use App\Http\Controllers\ProdiController;
 use App\Http\Controllers\ProkerController;
 use App\Http\Controllers\ArchiveController;
+use App\Http\Controllers\NewsController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ContentController;
 use App\Http\Controllers\FileController;
+use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\ForPassController;
 use App\Http\Controllers\SocialiteController;
 use Illuminate\Support\Facades\Route;
@@ -22,6 +24,7 @@ use App\Http\Controllers\UserController;
 use App\Models\User;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Auth;
+
 
 Route::get('/', [ClientController::class, 'home'])->name('dashboard');
 Route::get('/about', function () {
@@ -33,13 +36,13 @@ Route::get('/feedback', function () {
 })->name('feedback');
 
 // Route Admin Session
-Route::prefix('!4dm1n')->middleware(['auth', 'user-access:superadmin,admin'])->group(function () {
+Route::prefix('!4dm1n')->middleware(['auth', 'user-permission'])->group(function () {
     // Route Layouts
     Route::get('/', function () {
         return view('admin.pages.home');
     })->name('home');
 
-    Route::resource('major', ProdiController::class);
+    Route::resource('major', ProdiController::class)->middleware('user-access:superadmin');
     Route::resource('attendence', AttendenceController::class);
     Route::resource('proker', ProkerController::class);
     Route::resource('docum', DocumentationController::class);
@@ -47,16 +50,28 @@ Route::prefix('!4dm1n')->middleware(['auth', 'user-access:superadmin,admin'])->g
     Route::resource('archive', ArchiveController::class);
     Route::resource('content', ContentController::class);
     Route::resource('file', FileController::class);
+    Route::resource('certificate', CertificateController::class);
 
     // Jika di UserController tidak bisa memakai route user/{lain-lain} selain dari route resource controller lagi
     Route::get('/user_access', [UserController::class, 'showAccess'])->name('user.access');
-    Route::put('/user_access/{id}', [UserController::class, 'addAccess'])->name('user.addAccess');
+    Route::put('/user_access', [UserController::class, 'addAccess'])->name('user.addAccess');
+    Route::put('/user_access/{id}', [UserController::class, 'editAccess'])->name('user.editAccess');
 
-    Route::resource('department', DepartmentController::class);
+    Route::resource('department', DepartmentController::class)->middleware('user-access:superadmin');
 
     // Route documentations page
     Route::delete('/docum/{docum}/image/{imageIndex}', [DocumentationController::class, 'deleteImage'])->name('docum.deleteImage');
     Route::get('/docum/{docum}/image/{imageIndex}', [DocumentationController::class, 'showImage'])->name('docum.showImage');
+
+    // Route for News or Berita Acara
+    Route::controller(NewsController::class)->group(function () {
+        Route::get('/news', 'index')->name('news.index');
+        Route::delete('/news/delete/{id}', "delete")->name("news.delete");
+        Route::get('/news/edit/{id}', 'edit')->name('news.edit');
+        Route::get('/news/create', 'create')->name('news.create');
+        Route::post('/news/create/store', 'store')->name('news.store');
+        Route::put('/news/edit/{id}/store', 'update')->name('news.update');
+    });
     // Route untuk daftar konten
     Route::get('/contents', [ContentController::class, 'index'])->name('content.index');
     // Route untuk form tambah konten
@@ -77,6 +92,20 @@ Route::prefix('!4dm1n')->middleware(['auth', 'user-access:superadmin,admin'])->g
     Route::get('/proker/{proker}/files/{file}/edit', [FileController::class, 'edit'])->name('files.edit');
     Route::put('/proker/{proker}/files/{file}', [FileController::class, 'update'])->name('files.update');
     Route::delete('/proker/{proker}/files/{file}', [FileController::class, 'destroy'])->name('files.destroy');
+  
+    // Route untuk halaman index sertifikat
+    Route::get('/certificates', [CertificateController::class, 'index'])->name('certificate.index');
+    // Route untuk form tambah sertifikat manual
+    Route::get('/certificates/create', [CertificateController::class, 'create'])->name('certificate.create');
+    Route::post('/certificates/create', [CertificateController::class, 'store'])->name('certificate.store');
+    // Route untuk menyimpan sertifikat manual
+    Route::post('/certificates', [CertificateController::class, 'createFromTemplate'])->name('certificate.upload');
+    // Route untuk hapus sertifikat
+    Route::delete('/certificates/{certificate}', [CertificateController::class, 'destroy'])->name('certificate.destroy');
+    // Route untuk mengunggah template sertifikat
+    Route::post('/certificates/template', [CertificateController::class, 'upload'])->name('certificate.template.store');
+    // Route untuk generate sertifikat masal
+    Route::post('/certificates/generate-bulk', [CertificateController::class, 'generateBulkCertificates'])->name('certificate.generate.bulk');
 });
 
 // Route Auth
@@ -84,10 +113,6 @@ Route::middleware('not-quilify')->group(function () {
     // Login Routes
     Route::get('login', [AuthController::class, 'showLoginForm'])->name('login');
     Route::post('login', [AuthController::class, 'login']);
-
-    // Login dengan Google
-    Route::get('redirect', [SocialiteController::class, 'redirect'])->name('redirect');
-    Route::get('callback', [SocialiteController::class, 'callback'])->name('callback');
 
     // Register Routes
     Route::get('register', [AuthController::class, 'showRegistrationForm'])->name('register');
@@ -98,18 +123,22 @@ Route::middleware('not-quilify')->group(function () {
     Route::post('forgot/password', [ForPassController::class, 'submitForgotPasswordForm'])->name('forgot.password.post');
     Route::get('reset/password/{token}', [ForPassController::class, 'showResetPasswordForm'])->name('reset.password.get');
     Route::post('reset/password/{token}', [ForPassController::class, 'submitResetPasswordForm'])->name('reset.password.post');
-
-    // Email Verification Routes
-    Route::get('/email/verify', [AuthController::class, 'verifyNotice'])->middleware('auth')->name('verification.notice');
-    Route::get('/email/verify-resend', [AuthController::class, 'verifyResend'])->middleware('auth')->name('verification.resend.link');
-    Route::get('/email/verify-resend-mail', [AuthController::class, 'verifyResendMail'])->middleware('auth')->name('verification.resend.mail');
-    Route::get('/verify-mail/{token}', [AuthController::class, 'verifyEmail'])->name('verification.verify');
-    Route::post('/email/verification-notification', [AuthController::class, 'verifyHandler'])->name('verification.send');
-
-    // Code Division Routes
-    Route::get('/verify-code/{token}', [AuthController::class, 'showCodeDivision'])->middleware('auth')->name('verification.code.get');
-    Route::post('/verify-code/{token}', [AuthController::class, 'submitCodeDivision'])->middleware('auth')->name('verification.code.post');
 });
+
+// Email Verification Routes
+Route::get('/email/verify', [AuthController::class, 'verifyNotice'])->middleware('auth')->name('verification.notice');
+Route::get('/email/verify-resend', [AuthController::class, 'verifyResend'])->middleware('auth')->name('verification.resend.link');
+Route::get('/email/verify-resend-mail', [AuthController::class, 'verifyResendMail'])->middleware('auth')->name('verification.resend.mail');
+Route::get('/verify-mail/{token}', [AuthController::class, 'verifyEmail'])->name('verification.verify');
+Route::post('/email/verification-notification', [AuthController::class, 'verifyHandler'])->name('verification.send');
+
+// Code Division Routes
+Route::get('/verify-code/{token}', [AuthController::class, 'showCodeDivision'])->middleware('auth')->name('verification.code.get');
+Route::post('/verify-code/{token}', [AuthController::class, 'submitCodeDivision'])->middleware('auth')->name('verification.code.post');
+
+// Route Login dengan Google
+Route::get('redirect', [SocialiteController::class, 'redirect'])->name('redirect');
+Route::get('callback', [SocialiteController::class, 'callback'])->name('callback');
 
 // Route Logout
 Route::post('logout', [LoginController::class, 'logout'])->middleware('auth')->name('logout');
