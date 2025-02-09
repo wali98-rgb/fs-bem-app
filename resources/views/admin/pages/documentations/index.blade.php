@@ -136,7 +136,6 @@
                 </ul>
                 <!-- Tab panes -->
 
-
                 <div class="tab-content tabs-left-content card-block">
                     @forelse ($prokers as $proker)
                         <div class="tab-pane {{ request()->is('!4dm1n/docum#' . $proker->id) ? 'active' : '' }}"
